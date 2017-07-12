@@ -29,7 +29,7 @@ class Admin extends MY_controller
         $this->load->model('bus_m');
 
         if ($this->POST('add')) {
-            $required = ['rute','waktu','tanggal'];
+            $required = ['rute','waktu','tanggal','bus'];
             if (!$this->keberangkatan_m->required_input($required)) {
 				$this->flashmsg('Harap isi dengan lengkap!', 'warning');
 				redirect('admin/jadwal-keberangkatan');
@@ -38,7 +38,8 @@ class Admin extends MY_controller
             $data_keberangkatan = [
                 'id_rute' => $this->POST('rute'),
                 'waktu' => $this->POST('waktu'),
-                'tanggal' => $this->POST('tanggal')
+                'tanggal' => $this->POST('tanggal'),
+                'id_bus' => $this->POST('bus')
             ];
             $this->keberangkatan_m->insert($data_keberangkatan);
             $this->flashmsg('Berhasil menambahkan jadwal keberangkatan!', 'success');
@@ -48,6 +49,7 @@ class Admin extends MY_controller
 
         $tables = ['rute','bus']; $jcond = ['id_rute','id_bus'];
         $this->data['keberangkatan'] = $this->keberangkatan_m->getDataJoin($tables, $jcond);
+        $this->data['bus'] = $this->bus_m->get();
         $this->data['rute'] = $this->rute_m->get();
         $this->data['title'] = 'Admin'.$this->title;
         $this->data['content'] = 'admin/keberangkatan';

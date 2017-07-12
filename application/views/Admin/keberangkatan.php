@@ -77,6 +77,15 @@
                             </div>
                         </div>
                         <div class="form-group">
+                                <label>Rute Perjalanan</label>
+                                <select name="bus" class="form-control select2" style="width: 100%;">
+                                <option value="">- Pilih Bus -</option>
+                                <?php foreach ($bus as $row):?>
+                                <option value="<?=$row->id_bus?>"><?=$row->nama?></option>
+                                <?php endforeach;?>
+                                </select>
+                        </div>
+                        <div class="form-group">
                           <label for="exampleInputPassword1">Tanggal Keberangkatan</label>
                           <input type="date" name="tanggal" class="form-control" placeholder="Masukan Tanggal">
                         </div>
