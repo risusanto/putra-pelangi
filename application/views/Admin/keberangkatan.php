@@ -39,7 +39,7 @@
                   <td><span class="label label-success"><?=$row->waktu?></span></td>
                   <td><?=$row->tanggal?></td>
                   <td><?=$row->nama?></td>
-                  <td><?=$this->log_tiket_m->countTicket(['id_rute'=>$row->id_keberangkatan])?> / <?=$row->kapasitas?></td>
+                  <td><?=$this->log_tiket_m->countTicket(['id_keberangkatan'=>$row->id_keberangkatan])?> / <?=$row->kapasitas?></td>
                   <?php if ($row->status == 1):?>
                   <td><span class="label label-success">siap</span></td>
                   <?php elseif ($row->status == 2):?>

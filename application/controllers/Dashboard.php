@@ -36,6 +36,7 @@ class Dashboard extends MY_Controller
         }
         $this->load->model('keberangkatan_m');
         $this->load->model('log_tiket_m');
+        $this->load->model('bus_m');
         $this->load->library('encrypt');
         $id = $this->encrypt->decode($kode);
         $result = $this->keberangkatan_m->get_row(['id_keberangkatan' => $id]);
@@ -43,6 +44,7 @@ class Dashboard extends MY_Controller
             redirect('dashboard/perjalanan');
             exit;
         }
+        $this->data['kapasitas'] = $this->bus_m->get_row(['id_bus' => $result->id_bus])->kapasitas;
         $this->data['title'] = 'Pilih Kursi'.$this->title;
         $this->data['content'] = 'pelanggan/tiket';
 
