@@ -27,6 +27,7 @@ class Admin extends MY_controller
         $this->load->model('rute_m');
         $this->load->model('keberangkatan_m');
         $this->load->model('bus_m');
+        $this->load->model('log_tiket_m');
 
         if ($this->POST('add')) {
             $required = ['rute','waktu','tanggal','bus'];

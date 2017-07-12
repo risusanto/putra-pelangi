@@ -211,8 +211,10 @@ class MY_Model extends CI_Model
 		return $query->result();
 	}
 
-	public function getDataJoin($tables, $jcond)
+	public function getDataJoin($tables, $jcond, $cond = '')
 	{
+		if (is_array($cond))
+			$this->db->where($cond);
 		$this->db->select('*');
 		for ($i = 0; $i < count($tables); $i++)
 			$this->db->join($tables[$i], $jcond[$i]);

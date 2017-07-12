@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: 12 Jul 2017 pada 13.09
+-- Generation Time: 12 Jul 2017 pada 14.27
 -- Versi Server: 5.7.17-log
 -- PHP Version: 7.0.17
 
@@ -53,16 +53,39 @@ CREATE TABLE `keberangkatan` (
   `id_rute` int(6) DEFAULT NULL,
   `waktu` varchar(20) DEFAULT NULL,
   `tanggal` varchar(20) DEFAULT NULL,
-  `id_bus` int(10) DEFAULT NULL
+  `id_bus` int(10) DEFAULT NULL,
+  `status` int(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data untuk tabel `keberangkatan`
 --
 
-INSERT INTO `keberangkatan` (`id_keberangkatan`, `id_rute`, `waktu`, `tanggal`, `id_bus`) VALUES
-(1, 1, '18.00 AM', '2017-18-07', NULL),
-(2, 4, '13.00 WIB', '2017-07-13', NULL);
+INSERT INTO `keberangkatan` (`id_keberangkatan`, `id_rute`, `waktu`, `tanggal`, `id_bus`, `status`) VALUES
+(1, 1, '18.00 AM', '2017-18-07', 2, NULL),
+(2, 4, '13.00 WIB', '2017-07-13', 2, NULL),
+(3, 3, '13.00 WIB', '2017-07-20', 2, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `log_tiket`
+--
+
+CREATE TABLE `log_tiket` (
+  `id_log` bigint(20) NOT NULL,
+  `id_keberangkatan` bigint(20) DEFAULT NULL,
+  `pelanggan` varchar(255) DEFAULT NULL,
+  `status` int(1) DEFAULT NULL,
+  `id_rute` int(6) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data untuk tabel `log_tiket`
+--
+
+INSERT INTO `log_tiket` (`id_log`, `id_keberangkatan`, `pelanggan`, `status`, `id_rute`) VALUES
+(1, 1, 'admin', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -81,7 +104,8 @@ CREATE TABLE `role` (
 
 INSERT INTO `role` (`id_role`, `role`) VALUES
 (1, 'direktur'),
-(2, 'admin');
+(2, 'admin'),
+(3, 'pelanggan');
 
 -- --------------------------------------------------------
 
@@ -143,6 +167,15 @@ ALTER TABLE `keberangkatan`
   ADD KEY `fk_id_bus` (`id_bus`);
 
 --
+-- Indexes for table `log_tiket`
+--
+ALTER TABLE `log_tiket`
+  ADD PRIMARY KEY (`id_log`),
+  ADD KEY `fk_id_keberangkatan` (`id_keberangkatan`),
+  ADD KEY `fk_pelanggan` (`pelanggan`),
+  ADD KEY `fk_id_rute` (`id_rute`);
+
+--
 -- Indexes for table `role`
 --
 ALTER TABLE `role`
@@ -174,12 +207,17 @@ ALTER TABLE `bus`
 -- AUTO_INCREMENT for table `keberangkatan`
 --
 ALTER TABLE `keberangkatan`
-  MODIFY `id_keberangkatan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_keberangkatan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `log_tiket`
+--
+ALTER TABLE `log_tiket`
+  MODIFY `id_log` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `role`
 --
 ALTER TABLE `role`
-  MODIFY `id_role` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_role` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `rute`
 --
@@ -195,6 +233,14 @@ ALTER TABLE `rute`
 ALTER TABLE `keberangkatan`
   ADD CONSTRAINT `fk_id_bus` FOREIGN KEY (`id_bus`) REFERENCES `bus` (`id_bus`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_idrute` FOREIGN KEY (`id_rute`) REFERENCES `rute` (`id_rute`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `log_tiket`
+--
+ALTER TABLE `log_tiket`
+  ADD CONSTRAINT `fk_id_keberangkatan` FOREIGN KEY (`id_keberangkatan`) REFERENCES `keberangkatan` (`id_keberangkatan`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_id_rute` FOREIGN KEY (`id_rute`) REFERENCES `rute` (`id_rute`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_pelanggan` FOREIGN KEY (`pelanggan`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `user`
