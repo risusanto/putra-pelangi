@@ -26,6 +26,8 @@
                   <th>Rute</th>
                   <th>Waktu</th>
                   <th>Tanggal</th>
+                  <th>Armada</th>
+                  <th>Penumpang</th>
                   <th>Opsi</th>
                 </tr>
                 <?php $i = 1; foreach ($keberangkatan as $row):?>
@@ -35,6 +37,8 @@
                   <td><?=$row->rute?></td>
                   <td><span class="label label-success"><?=$row->waktu?></span></td>
                   <td><?=$row->tanggal?></td>
+                  <td><?=$row->nama?></td>
+                  <td><?=$row->kapasitas?></td>
                   <td>BUTTON HERE</td>
                 </tr>
                 <?php endforeach;?>

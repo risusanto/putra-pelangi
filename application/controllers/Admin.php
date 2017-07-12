@@ -26,6 +26,7 @@ class Admin extends MY_controller
     public function jadwal_keberangkatan(){
         $this->load->model('rute_m');
         $this->load->model('keberangkatan_m');
+        $this->load->model('bus_m');
 
         if ($this->POST('add')) {
             $required = ['rute','waktu','tanggal'];
@@ -45,7 +46,7 @@ class Admin extends MY_controller
             exit;
         }
 
-        $tables = ['rute']; $jcond = ['id_rute'];
+        $tables = ['rute','bus']; $jcond = ['id_rute','id_bus'];
         $this->data['keberangkatan'] = $this->keberangkatan_m->getDataJoin($tables, $jcond);
         $this->data['rute'] = $this->rute_m->get();
         $this->data['title'] = 'Admin'.$this->title;
