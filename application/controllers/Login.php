@@ -18,7 +18,7 @@ class Login extends MY_Controller {
 					redirect('admin');
 					break;
 				case 3:
-					redirect('pelanggan');
+					redirect('dashboard');
 					break;
 			}
 			exit;

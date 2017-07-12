@@ -28,6 +28,7 @@
                   <th>Tanggal</th>
                   <th>Armada</th>
                   <th>Penumpang</th>
+                  <th>Status</th>
                   <th>Opsi</th>
                 </tr>
                 <?php $i = 1; foreach ($keberangkatan as $row):?>
@@ -39,6 +40,15 @@
                   <td><?=$row->tanggal?></td>
                   <td><?=$row->nama?></td>
                   <td><?=$this->log_tiket_m->countTicket(['id_rute'=>$row->id_keberangkatan])?> / <?=$row->kapasitas?></td>
+                  <?php if ($row->status == 1):?>
+                  <td><span class="label label-success">siap</span></td>
+                  <?php elseif ($row->status == 2):?>
+                  <td><span class="label label-warning">ditunda</span></td>
+                  <?php elseif($row->status == 3):?>
+                  <td><span class="label label-danger">berangkat</span></td>
+                  <?php else:?>
+                  <td>tidak diketahui</td>
+                  <?php endif;?>
                   <td>BUTTON HERE</td>
                 </tr>
                 <?php endforeach;?>
@@ -60,7 +70,7 @@
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span></button>
-                  <h4 class="modal-title">Tambah Rute Perjalanan</h4>
+                  <h4 class="modal-title">Tambah Jadwal Keberangkatan</h4>
                 </div>
                 <div class="modal-body">
                   <?=form_open('admin/jadwal-keberangkatan')?>
@@ -77,7 +87,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                                <label>Rute Perjalanan</label>
+                                <label>Armada</label>
                                 <select name="bus" class="form-control select2" style="width: 100%;">
                                 <option value="">- Pilih Bus -</option>
                                 <?php foreach ($bus as $row):?>
