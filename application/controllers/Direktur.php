@@ -27,13 +27,25 @@ class Direktur extends MY_Controller {
         $this->load->model('rute_m');
         if ($this->POST('add')) {
             $data_rute = [
-                'rute' => $this->POST('rute'),
+                'asal' => $this->POST('asal'),
+                'tujuan' => $this->POST('tujuan'),
                 'biaya' => $this->POST('biaya')
             ];
             $this->rute_m->insert($data_rute);
             $this->flashmsg('Berhasil menambahkan rute perjalanan <b>'.$this->POST('rute').'</b>!', 'success');
             redirect('direktur/rute-perjalanan');
         }
+
+        if ($this->POST('get') && $this->POST('id')) {
+				$data_r = $this->rute_m->get_row(['id' => $this->POST('id')]);
+				echo json_encode($data_r);
+				exit;
+		}
+
+        if ($this->POST('delete') && $this->POST('id')) {
+            $this->rute_m->delete($this->POST('id'));
+        }
+
         $this->data['rute'] = $this->rute_m->get();
         $this->data['title'] = 'Rute Perjalanan'.$this->title;
         $this->data['content'] = 'direktur/rute';

@@ -202,7 +202,8 @@
   <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
-
+<!-- Sweet Alert -->
+<script src="<?=base_url('assets/dist/js/sweetalert.min.js')?>"></script>
 <!-- jQuery 2.2.3 -->
 <script src="<?=base_url('assets/plugins/jQuery/jquery-2.2.3.min.js')?>"></script>
 <!-- Bootstrap 3.3.6 -->

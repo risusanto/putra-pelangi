@@ -25,6 +25,8 @@
   <link rel="stylesheet" href="<?=base_url('assets/plugins/timepicker/bootstrap-timepicker.min.css')?>">
   <!-- Select2 -->
   <link rel="stylesheet" href="<?=base_url('assets/plugins/select2/select2.min.css')?>">
+    <!-- Sweet alert -->
+  <link rel="stylesheet" href="<?=base_url('assets/dist/css/sweetalert.css')?>">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

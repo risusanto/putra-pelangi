@@ -26,7 +26,8 @@
                   <th>Rute</th>
                   <th>Waktu</th>
                   <th>Tanggal</th>
-                  <th>Armada</th>
+                  <th>Pengemudi</th>
+                  <th>Telepon Pengemudi</th>
                   <th>Penumpang</th>
                   <th>Status</th>
                   <th>Opsi</th>
@@ -35,10 +36,11 @@
                 <tr>
                   <td><?=$i?></td>
                   <td >KB<?=$row->id_rute?></td>
-                  <td><?=$row->rute?></td>
+                  <td><?=$row->asal?> - <?=$row->tujuan?> </td>
                   <td><span class="label label-success"><?=$row->waktu?></span></td>
                   <td><?=$row->tanggal?></td>
                   <td><?=$row->nama?></td>
+                  <td><?=$row->telepon?></td>
                   <td><?=$this->log_tiket_m->countTicket(['id_keberangkatan'=>$row->id_keberangkatan])?> / <?=$row->kapasitas?></td>
                   <?php if ($row->status == 1):?>
                   <td><span class="label label-success">siap</span></td>
@@ -49,7 +51,10 @@
                   <?php else:?>
                   <td>tidak diketahui</td>
                   <?php endif;?>
-                  <td>BUTTON HERE</td>
+                  <td>
+                    <button type="button" class="btn btn-primary fa fa-edit" data-toggle="modal" data-target="#edit" onclick="get(<?=$row->id_keberangkatan?>)"></button>
+                    <button type="button" class="btn btn-danger fa fa-trash" onclick="deleteData(<?=$row->id_keberangkatan?>)"></button>
+                  </td>
                 </tr>
                 <?php endforeach;?>
               </table>
@@ -81,15 +86,15 @@
                                 <select name="rute" class="form-control select2" style="width: 100%;">
                                 <option value="">- Pilih Rute -</option>
                                 <?php foreach ($rute as $row):?>
-                                <option value="<?=$row->id_rute?>"><?=$row->rute?></option>
+                                <option value="<?=$row->id_rute?>"><?=$row->asal?> - <?=$row->tujuan?></option>
                                 <?php endforeach;?>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                                <label>Armada</label>
+                                <label>Pengemudi</label>
                                 <select name="bus" class="form-control select2" style="width: 100%;">
-                                <option value="">- Pilih Bus -</option>
+                                <option value="">- Pilih Pengemudi -</option>
                                 <?php foreach ($bus as $row):?>
                                 <option value="<?=$row->id_bus?>"><?=$row->nama?></option>
                                 <?php endforeach;?>
@@ -117,7 +122,112 @@
             <!-- /.modal-dialog -->
         </div>
 
+        <div class="modal fade" id="edit" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title">Edit Jadwal Keberangkatan</h4>
+                </div>
+                <div class="modal-body">
+                  <?=form_open('admin/jadwal-keberangkatan')?>
+                      <div class="box-body">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label>Rute Perjalanan (Biarkan jika tidak diubah)</label>
+                                <select name="rute" class="form-control select2" style="width: 100%;">
+                                <option value="">- Pilih Rute -</option>
+                                <?php foreach ($rute as $row):?>
+                                <option value="<?=$row->id_rute?>"><?=$row->asal?> - <?=$row->tujuan?></option>
+                                <?php endforeach;?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                                <label>Pengemudi (Biarkan jika tidak diubah)</label>
+                                <select name="bus" class="form-control select2" style="width: 100%;">
+                                <option value="">- Pilih Pengemudi -</option>
+                                <?php foreach ($bus as $row):?>
+                                <option value="<?=$row->id_bus?>"><?=$row->nama?></option>
+                                <?php endforeach;?>
+                                </select>
+                        </div>
+                        <div class="form-group">
+                          <label for="exampleInputPassword1">Tanggal Keberangkatan</label>
+                          <input type="date" name="edit_tanggal" id="edit_tanggal" class="form-control" placeholder="Masukan Tanggal">
+                        </div>
+                        <div class="form-group">
+                          <label for="exampleInputPassword1">Waktu Keberangkatan</label>
+                          <input type="text" name="edit_waktu" id="edit_waktu" class="form-control" placeholder="Contoh: 12.00 WIB">
+                        </div>
+                        <input type="hidden" name="edit_keberangkatan" id="edit_keberangkatan" class="form-control" placeholder="Contoh: 12.00 WIB">
+                      </div>
+                      <!-- /.box-body -->
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
+                  <input type="submit" name ="edit" class="btn btn-primary" value="Simpan">
+                <?=form_close()?>
+                </div>
+              </div>
+              <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+
 <!-- Page script -->
+
+    <script type="text/javascript">
+
+        function get(id_keberangkatan) {
+            $.ajax({
+                url: '<?= base_url('admin/jadwal-keberangkatan') ?>',
+                type: 'POST',
+                data: {
+                    id_keberangkatan: id_keberangkatan,
+                    get: true
+                },
+                success: function(response) {
+                    response = JSON.parse(response);
+                    $('#edit_waktu').val(response.waktu);
+                    $('#edit_tanggal').val(response.tanggal);
+                    $('#edit_keberangkatan').val(response.id_keberangkatan);
+                }
+            });
+        }
+
+        function deleteData(id) {
+            swal({
+            title: "Hapus?",
+            text: " ",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Ya",
+            cancelButtonText: "Tidak",
+            closeOnConfirm: true,
+            closeOnCancel: true
+            },
+            function(isConfirm){
+            if (isConfirm) {
+                $.ajax({
+                    url: '<?= base_url('admin/jadwal-keberangkatan') ?>',
+                    type: 'POST',
+                    data: {
+                        delete: true,
+                        id: id
+                    },
+                    success: function() {
+                        window.location = '<?= base_url('admin/jadwal-keberangkatan') ?>';
+                    }
+                });
+            }
+            });
+        }
+
+    </script>
+
 <script>
   $(function () {
     //Initialize Select2 Elements
