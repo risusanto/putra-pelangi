@@ -9,8 +9,8 @@ class Admin extends MY_controller
         $this->data['id_role'] = $this->session->userdata('id_role');
         if (!isset($this->data['username']) || $this->data['id_role'] != 2 ) {
             $this->session->unset_userdata('username');
-             $this->session->unset_userdata('id_role');
-			$this->flashmsg('Anda harus login terlebih dahulu!', 'warning');
+            $this->session->unset_userdata('id_role');
+			      $this->flashmsg('Anda harus login terlebih dahulu!', 'warning');
             redirect('login');
             exit;
         }

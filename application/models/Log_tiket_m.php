@@ -18,8 +18,8 @@ class Log_tiket_m extends MY_Model {
     public function cek_kursi($no_kursi,$id){
       $result = $this->get_row(['kursi' => $no_kursi,'id_keberangkatan' => $id]);
       if (isset($result)) {
-        return false;
+        return 0;
       }
-      return true;
+      return 1;
     }
 }

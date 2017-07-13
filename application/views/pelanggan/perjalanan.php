@@ -44,7 +44,9 @@
                   <td><?=$row->tanggal?></td>
                   <td><?=$row->nama?></td>
                   <td>
-                  <a href="<?=base_url('dashboard/pesan-tiket/'.$this->encrypt->encode($row->id_keberangkatan))?>" class="btn btn-block btn-success">Pesan</a>
+                  <?php if ($profile->pesanan == 0): ?>
+                    <a href="<?=base_url('dashboard/pesan-tiket/'.$this->encrypt->encode($row->id_keberangkatan))?>" class="btn btn-block btn-success">Pesan</a>
+                  <?php endif; ?>
                   </td>
                 </tr>
                 <?php endif;?>
@@ -79,7 +81,7 @@
         function pesan(id) {
             swal({
             title: "Pesan Tiket?",
-            text: ' ', 
+            text: ' ',
             type: "success",
             showCancelButton: true,
             confirmButtonColor: "#08a82c",
