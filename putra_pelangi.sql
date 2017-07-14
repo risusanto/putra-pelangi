@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: 13 Jul 2017 pada 07.56
+-- Generation Time: 14 Jul 2017 pada 01.44
 -- Versi Server: 5.7.17-log
 -- PHP Version: 7.0.17
 
@@ -30,7 +30,7 @@ CREATE TABLE `bus` (
   `id_bus` int(10) NOT NULL,
   `nama` varchar(255) DEFAULT NULL,
   `kapasitas` int(4) DEFAULT NULL,
-  `tahun` varchar(8) DEFAULT NULL,
+  `telepon` varchar(20) DEFAULT '-',
   `pembuat` varchar(64) DEFAULT NULL,
   `no_polisi` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -39,9 +39,8 @@ CREATE TABLE `bus` (
 -- Dumping data untuk tabel `bus`
 --
 
-INSERT INTO `bus` (`id_bus`, `nama`, `kapasitas`, `tahun`, `pembuat`, `no_polisi`) VALUES
-(2, 'Bus Ijo cok', 39, '2011', 'Marfuah', 'BG 1996 LH'),
-(3, 'd', 35, '4342', '43re', 'fretfd');
+INSERT INTO `bus` (`id_bus`, `nama`, `kapasitas`, `telepon`, `pembuat`, `no_polisi`) VALUES
+(5, 'Amin', 39, '09098', NULL, 'BG 1996 LH');
 
 -- --------------------------------------------------------
 
@@ -63,9 +62,7 @@ CREATE TABLE `keberangkatan` (
 --
 
 INSERT INTO `keberangkatan` (`id_keberangkatan`, `id_rute`, `waktu`, `tanggal`, `id_bus`, `status`) VALUES
-(1, 1, '18.00 AM', '2017-18-07', 2, NULL),
-(3, 3, '13.00 WIB', '2017-07-20', 2, 2),
-(4, 4, '13.00', '2017-07-15', 3, 1);
+(6, 1, '12.24', '2017-07-08', 5, 1);
 
 -- --------------------------------------------------------
 
@@ -82,15 +79,6 @@ CREATE TABLE `log_tiket` (
   `kursi` int(6) DEFAULT NULL,
   `id_pesanan` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data untuk tabel `log_tiket`
---
-
-INSERT INTO `log_tiket` (`id_log`, `id_keberangkatan`, `pelanggan`, `status`, `id_rute`, `kursi`, `id_pesanan`) VALUES
-(25, 4, 'pelanggan@pelanggan.com', 3, 4, 1, 261),
-(26, 3, 'pelanggan@pelanggan.com', 3, 3, 15, 262),
-(27, 3, 'pelanggan@pelanggan.com', 3, 3, 16, 262);
 
 -- --------------------------------------------------------
 
@@ -127,14 +115,6 @@ CREATE TABLE `pesanan` (
   `status` int(1) DEFAULT '3'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data untuk tabel `pesanan`
---
-
-INSERT INTO `pesanan` (`id_pesanan`, `pelanggan`, `id_keberangkatan`, `status`) VALUES
-(261, 'pelanggan@pelanggan.com', 4, 2),
-(262, 'pelanggan@pelanggan.com', 3, 2);
-
 -- --------------------------------------------------------
 
 --
@@ -164,6 +144,8 @@ INSERT INTO `role` (`id_role`, `role`) VALUES
 CREATE TABLE `rute` (
   `id_rute` int(6) NOT NULL,
   `rute` text,
+  `asal` varchar(255) NOT NULL,
+  `tujuan` varchar(255) NOT NULL,
   `biaya` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -171,10 +153,10 @@ CREATE TABLE `rute` (
 -- Dumping data untuk tabel `rute`
 --
 
-INSERT INTO `rute` (`id_rute`, `rute`, `biaya`) VALUES
-(1, 'Palembang - Medan', 300000),
-(3, 'Palembang - Jambi', 200000),
-(4, 'Palembang - Lampung', 400000);
+INSERT INTO `rute` (`id_rute`, `rute`, `asal`, `tujuan`, `biaya`) VALUES
+(1, 'Palembang - Medan', 'Palembang', 'Medan', 300000),
+(3, 'Palembang - Jambi', 'Palembang', 'Jambi', 200000),
+(4, 'Palembang - Lampung', 'Palembang', 'Lampung', 400000);
 
 -- --------------------------------------------------------
 
@@ -266,22 +248,22 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `bus`
 --
 ALTER TABLE `bus`
-  MODIFY `id_bus` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_bus` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `keberangkatan`
 --
 ALTER TABLE `keberangkatan`
-  MODIFY `id_keberangkatan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_keberangkatan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `log_tiket`
 --
 ALTER TABLE `log_tiket`
-  MODIFY `id_log` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id_log` bigint(20) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `pesanan`
 --
 ALTER TABLE `pesanan`
-  MODIFY `id_pesanan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=263;
+  MODIFY `id_pesanan` bigint(20) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `role`
 --
