@@ -39,7 +39,7 @@
                 <?php if ($row->status != 3):?>
                 <tr>
                   <td>KB<?=$row->id_keberangkatan?></td>
-                  <td><?=$row->rute?></td>
+                  <td><?=$row->asal?> - <?=$row->tujuan?></td>
                   <td><?=$row->waktu?></td>
                   <td><?=$row->tanggal?></td>
                   <td><?=$row->nama?></td>
