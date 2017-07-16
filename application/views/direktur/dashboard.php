@@ -24,11 +24,9 @@
           </div>
         </div>
         <div class="box-body">
-          Start creating your amazing application!
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
-          Footer
         </div>
         <!-- /.box-footer-->
       </div>

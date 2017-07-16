@@ -28,6 +28,7 @@
                   <th>Tanggal</th>
                   <th>Pengemudi</th>
                   <th>Telepon Pengemudi</th>
+                  <th>No. Polisi Bus</th>
                   <th>Penumpang</th>
                   <th>Status</th>
                   <th>Opsi</th>
@@ -41,6 +42,7 @@
                   <td><?=$row->tanggal?></td>
                   <td><?=$row->nama?></td>
                   <td><?=$row->telepon?></td>
+                  <td><?=$row->no_polisi?></td>
                   <td><?=$this->log_tiket_m->countTicket(['id_keberangkatan'=>$row->id_keberangkatan])?> / <?=$row->kapasitas?></td>
                   <?php if ($row->status == 1):?>
                   <td><span class="label label-success">siap</span></td>

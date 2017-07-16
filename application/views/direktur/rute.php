@@ -102,15 +102,15 @@
                       <div class="box-body">
                         <div class="form-group">
                           <label for="exampleInputEmail1">Asal</label>
-                          <input type="text" value="" name="edit_asal" id="edit_asal" class="form-control" placeholder="Rute Awal">
+                          <input type="text" value="" name="asal" id="edit_asal" class="form-control" placeholder="Rute Awal">
                         </div>
                         <div class="form-group">
                           <label for="exampleInputEmail1">Tujuan</label>
-                          <input type="text" name="edit_tujuan" id="edit_tujuan" class="form-control" placeholder="Rute Tujuan">
+                          <input type="text" name="tujuan" id="edit_tujuan" class="form-control" placeholder="Rute Tujuan">
                         </div>
                         <div class="form-group">
                           <label for="exampleInputPassword1">Biaya</label>
-                          <input type="number" name="edit_biaya" id="edit_biaya" class="form-control" placeholder="Masukan Biaya Perjalanan">
+                          <input type="number" name="biaya" id="edit_biaya" class="form-control" placeholder="Masukan Biaya Perjalanan">
                         </div>
                         <input type="hidden" name="id_rute" id="id_rute">
                       </div>

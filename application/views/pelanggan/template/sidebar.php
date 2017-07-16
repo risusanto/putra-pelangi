@@ -26,13 +26,8 @@
           </a>
         </li>
         <li>
-          <a href="<?=base_url('dashboard/jadwal')?>">
-            <i class="fa fa-calendar"></i> <span>Jadwal</span>
-          </a>
-        </li>
-        <li>
           <a href="<?=base_url('dashboard/tagihan')?>">
-            <i class="fa fa-file-text"></i> <span>Tagihan</span>
+            <i class="fa fa-file-text"></i> <span>Tagihan & Jadwal</span>
           </a>
         </li>
       </ul>

@@ -14,7 +14,7 @@ class Direktur extends MY_Controller {
             exit;
         }
     }
-    
+
 	public function index()
 	{
 		$this->data['title'] = 'Direktur'.$this->title;
@@ -25,6 +25,13 @@ class Direktur extends MY_Controller {
 
     public function rute_perjalanan(){
         $this->load->model('rute_m');
+
+        if ($this->POST('get') && $this->POST('id')) {
+  				$data = $this->rute_m->get_row(['id_rute' => $this->POST('id')]);
+  				echo json_encode($data);
+  				exit;
+		    }
+
         if ($this->POST('add')) {
             $data_rute = [
                 'asal' => $this->POST('asal'),
@@ -36,14 +43,19 @@ class Direktur extends MY_Controller {
             redirect('direktur/rute-perjalanan');
         }
 
-        if ($this->POST('get') && $this->POST('id')) {
-				$data_r = $this->rute_m->get_row(['id' => $this->POST('id')]);
-				echo json_encode($data_r);
-				exit;
-		}
-
         if ($this->POST('delete') && $this->POST('id')) {
             $this->rute_m->delete($this->POST('id'));
+        }
+
+        if ($this->POST('edit')) {
+          $data = [
+              'asal' => $this->POST('asal'),
+              'tujuan' => $this->POST('tujuan'),
+              'biaya' => $this->POST('biaya')
+          ];
+          $this->rute_m->update($this->POST('id_rute'),$data);
+          $this->flashmsg('data disimpan');
+          redirect('direktur/rute-perjalanan');
         }
 
         $this->data['rute'] = $this->rute_m->get();
@@ -51,5 +63,22 @@ class Direktur extends MY_Controller {
         $this->data['content'] = 'direktur/rute';
 
         $this->template($this->data,'direktur');
+    }
+
+    public function jadwal_keberangkatan()
+    {
+      $this->load->model('rute_m');
+      $this->load->model('keberangkatan_m');
+      $this->load->model('bus_m');
+      $this->load->model('log_tiket_m');
+
+      $tables = ['rute','bus']; $jcond = ['id_rute','id_bus'];
+      $this->data['keberangkatan'] = $this->keberangkatan_m->getDataJoin($tables, $jcond);
+      $this->data['bus'] = $this->bus_m->get();
+      $this->data['rute'] = $this->rute_m->get();
+      $this->data['title'] = 'Keberangkatan'.$this->title;
+      $this->data['content'] = 'direktur/keberangkatan';
+
+      $this->template($this->data,'direktur');
     }
 }

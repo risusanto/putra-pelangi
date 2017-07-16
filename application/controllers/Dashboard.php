@@ -34,6 +34,7 @@ class Dashboard extends MY_Controller
           redirect('dashboard/pesan-tiket/'.$this->data['profile']->pesanan);
           exit;
         }
+        $this->load->model('log_tiket_m');
         $this->load->model('keberangkatan_m');
         $this->load->library('encrypt');
 
@@ -126,6 +127,7 @@ class Dashboard extends MY_Controller
       $this->load->model('pesanan_m');
       $this->load->model('bus_m');
       $this->load->model('rute_m');
+      $this->load->library('encrypt');
 
       $tables = ['keberangkatan']; $jcond = ['id_keberangkatan'];
       $cond = [
@@ -137,5 +139,84 @@ class Dashboard extends MY_Controller
       $this->data['content'] = 'pelanggan/tagihan';
 
       $this->template($this->data);
+    }
+
+    public function invoice()
+    {
+      $this->load->library('encrypt');
+      $this->load->model('pesanan_m');
+      $this->load->model('rute_m');
+      $this->load->model('keberangkatan_m');
+      $this->load->model('log_tiket_m');
+      $this->load->model('konfirmasi_m');
+
+      $kode = $this->uri->segment(3);
+      if (!isset($kode)) {
+        redirect('dashboard/tagihan');
+        exit;
+      }
+      $cek = $this->pesanan_m->get_row(['id_pesanan' => $this->encrypt->decode($kode)]);
+      if (!isset($cek)) {
+        redirect('dashboard/tagihan');
+        exit;
+      }
+
+      if ($this->POST('add')) {
+        $req = ['tanggal_pembayaran','jumlah_pembayaran',''];
+        if (!$this->konfirmasi_m->required_input($req)) {
+          redirect('dashboard/invoice/'.$kode);
+          $this->flashdata('Data harus lengkap!');
+          exit;
+        }
+        $data = [
+          'tanggal_pembayaran' => $this->POST('tanggal_pembayaran'),
+          'id_pesanan' => $cek->id_pesanan,
+          'pelanggan' => $this->data['profile']->email,
+          'jumlah_pembayaran' => $this->POST('jumlah_pembayaran'),
+          'pesan' => $this->POST('pesan')
+        ];
+        $this->konfirmasi_m->insert($data);
+        $this->upload($this->db->insert_id(),'bukti');
+        $this->pesanan_m->update($cek->id_pesanan,['status_pembayaran' => 'menunggu konfirmasi']);
+        $this->flashmsg('Berhasil disimpan!');
+        redirect('dashboard/invoice/'.$kode);
+        exit;
+      }
+
+      $id_rute = $this->keberangkatan_m->get_row(['id_keberangkatan' => $cek->id_keberangkatan])->id_rute;
+      $this->data['invoice'] = $cek;
+      $this->data['total'] = $this->rute_m->get_row(['id_rute' => $id_rute])->biaya * $this->log_tiket_m->get_num_row(['id_pesanan' => $cek->id_pesanan]);
+      $this->data['pesanan'] = $this->log_tiket_m->get(['id_pesanan' => $cek->id_pesanan]);
+      $this->data['title'] = 'Invoice'.$this->title;
+      $this->data['content'] = 'pelanggan/invoice';
+
+      $this->template($this->data);
+    }
+
+    public function print()
+    {
+      $this->load->library('encrypt');
+      $this->load->model('pesanan_m');
+      $this->load->model('rute_m');
+      $this->load->model('keberangkatan_m');
+      $this->load->model('log_tiket_m');
+
+      $kode = $this->uri->segment(3);
+      if (!isset($kode)) {
+        redirect('dashboard/tagihan');
+        exit;
+      }
+      $cek = $this->pesanan_m->get_row(['id_pesanan' => $this->encrypt->decode($kode)]);
+      if (!isset($cek)) {
+        redirect('dashboard/tagihan');
+        exit;
+      }
+      $id_rute = $this->keberangkatan_m->get_row(['id_keberangkatan' => $cek->id_keberangkatan])->id_rute;
+      $this->data['invoice'] = $cek;
+      $this->data['total'] = $this->rute_m->get_row(['id_rute' => $id_rute])->biaya * $this->log_tiket_m->get_num_row(['id_pesanan' => $cek->id_pesanan]);
+      $this->data['pesanan'] = $this->log_tiket_m->get(['id_pesanan' => $cek->id_pesanan]);
+      $this->data['title'] = 'Invoice'.$this->title;
+
+      $this->load->view('pelanggan/print',$this->data);
     }
 }

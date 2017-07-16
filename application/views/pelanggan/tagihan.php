@@ -25,6 +25,7 @@
                 <th>Waktu Keberangkatan</th>
                 <th>Tanggal Keberangkatan</th>
                 <th>Armada</th>
+                <th>Status</th>
                 <th>Opsi</th>
               </tr>
               </thead>
@@ -37,8 +38,9 @@
                 <td><?=$row->waktu?></td>
                 <td><?=$row->tanggal?></td>
                 <td><?=$this->bus_m->get_row(['id_bus' => $row->id_bus])->nama?></td>
+                <td><?=$row->status_pembayaran?></td>
                 <td>
-                  BUTTON HERE
+                  <a href="<?=base_url('dashboard/invoice/'.$this->encrypt->encode($row->id_pesanan))?>" class="btn btn-block btn-success">Invoice</a>
                 </td>
               </tr>
               <?php endif;?>
@@ -51,6 +53,7 @@
                 <th>Waktu Keberangkatan</th>
                 <th>Tanggal Keberangkatan</th>
                 <th>Armada</th>
+                <th>Status</th>
                 <th>Pilihan</th>
               </tr>
               </tfoot>

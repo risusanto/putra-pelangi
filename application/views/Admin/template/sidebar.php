@@ -30,6 +30,11 @@
             <i class="fa fa-bus"></i> <span>Armada</span>
           </a>
         </li>
+        <li>
+          <a href="<?=base_url('admin/konfirmasi-pembayaran')?>">
+            <i class="fa fa-bus"></i> <span>Konfirmasi Pembayaran</span>
+          </a>
+        </li>
       </ul>
     </section>
     <!-- /.sidebar -->

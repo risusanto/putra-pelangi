@@ -150,4 +150,53 @@ class Admin extends MY_controller
 
         $this->template($this->data,'admin');
     }
+
+    public function konfirmasi_pembayaran()
+    {
+      $this->load->model('konfirmasi_m');
+      $this->load->library('encrypt');
+      $this->load->model('pesanan_m');
+
+      if ($this->POST('konfirmasi')) {
+        $get = $this->konfirmasi_m->get_row(['id_konfirmasi' => $this->POST('id')])->id_pesanan;
+        $this->konfirmasi_m->delete($this->POST('id'));
+        $this->pesanan_m->update($get,['status_pembayaran' => 'LUNAS']);
+        exit;
+      }
+
+      $this->data['konfirmasi'] = $this->konfirmasi_m->get_by_order('id_pesanan','asc');
+      $this->data['title'] = 'Konfirmasi Pembayaran'.$this->title;
+      $this->data['content'] = 'admin/konfirmasi';
+
+      $this->template($this->data,'admin');
+    }
+
+    public function pesanan()
+    {
+      $this->load->library('encrypt');
+      $this->load->model('pesanan_m');
+      $this->load->model('rute_m');
+      $this->load->model('keberangkatan_m');
+      $this->load->model('log_tiket_m');
+      $this->load->model('pelanggan_m');
+
+      $kode = $this->uri->segment(3);
+      if (!isset($kode)) {
+        redirect('admin/konfirmasi-pembayaran');
+        exit;
+      }
+      $cek = $this->pesanan_m->get_row(['id_pesanan' => $this->encrypt->decode($kode)]);
+      if (!isset($cek)) {
+        redirect('admin/konfirmasi-pembayaran');
+        exit;
+      }
+      $this->data['profile'] = $this->pelanggan_m->get_row(['email' => $cek->pelanggan]);
+      $id_rute = $this->keberangkatan_m->get_row(['id_keberangkatan' => $cek->id_keberangkatan])->id_rute;
+      $this->data['invoice'] = $cek;
+      $this->data['total'] = $this->rute_m->get_row(['id_rute' => $id_rute])->biaya * $this->log_tiket_m->get_num_row(['id_pesanan' => $cek->id_pesanan]);
+      $this->data['pesanan'] = $this->log_tiket_m->get(['id_pesanan' => $cek->id_pesanan]);
+      $this->data['title'] = 'Invoice'.$this->title;
+
+      $this->load->view('admin/detail',$this->data);
+    }
 }

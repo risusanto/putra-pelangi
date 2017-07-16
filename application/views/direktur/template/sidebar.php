@@ -25,6 +25,11 @@
             <i class="fa fa-bus"></i> <span>Rute Perjalanan</span>
           </a>
         </li>
+        <li>
+          <a href="<?=base_url('direktur/jadwal-keberangkatan')?>">
+            <i class="fa fa-bus"></i> <span>Jadwal Keberangkatan</span>
+          </a>
+        </li>
       </ul>
     </section>
     <!-- /.sidebar -->
