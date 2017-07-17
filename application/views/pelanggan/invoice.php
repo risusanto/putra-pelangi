@@ -119,7 +119,7 @@
     <!-- this row will not appear when printing -->
     <div class="row no-print">
       <div class="col-xs-12">
-        <a href="<?=base_url('dashboard/print/'.$this->uri->segment(3))?>" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
+        <a href="<?=base_url('dashboard/print_tiket/'.$this->uri->segment(3))?>" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
         <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#add"><i class="fa fa-credit-card"></i> Konfirmasi
         </button>
       </div>

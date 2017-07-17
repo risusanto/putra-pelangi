@@ -193,7 +193,7 @@ class Dashboard extends MY_Controller
       $this->template($this->data);
     }
 
-    public function print()
+    public function print_tiket()
     {
       $this->load->library('encrypt');
       $this->load->model('pesanan_m');
