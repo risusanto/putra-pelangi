@@ -27,7 +27,12 @@
         </li>
         <li>
           <a href="<?=base_url('direktur/jadwal-keberangkatan')?>">
-            <i class="fa fa-bus"></i> <span>Jadwal Keberangkatan</span>
+            <i class="fa fa-calendar-o"></i> <span>Jadwal Keberangkatan</span>
+          </a>
+        </li>
+        <li>
+          <a href="<?=base_url('direktur/log-penjualan')?>">
+            <i class="fa  fa-money"></i> <span>Log Penjualan</span>
           </a>
         </li>
       </ul>

@@ -2,11 +2,12 @@
 
 class MY_Controller extends CI_Controller
 {
-	public $title = ' | Pelangi Putra Perkasa';
+	public $title = ' | Putra Pelangi Perkasa';
 
 	public function __construct()
 	{
 		parent::__construct();
+		date_default_timezone_set('Asia/Jakarta');
 	}
 
 	public function template($data, $template = 'siswa')

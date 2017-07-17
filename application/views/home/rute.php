@@ -86,6 +86,7 @@
                 <th>Rute</th>
                 <th>Waktu Keberangkatan</th>
                 <th>Tanggal Keberangkatan</th>
+                <th>Sisa Kursi</th>
               </tr>
               </thead>
               <tbody>
@@ -96,6 +97,7 @@
                 <td><?=$row->asal?> - <?=$row->tujuan?></td>
                 <td><?=$row->waktu?></td>
                 <td><?=$row->tanggal?></td>
+                <td><?=$this->log_tiket_m->countTicket(['id_keberangkatan'=>$row->id_keberangkatan])?> / <?=$row->kapasitas?></td>
               </tr>
               <?php endif;?>
               <?php endforeach;?>

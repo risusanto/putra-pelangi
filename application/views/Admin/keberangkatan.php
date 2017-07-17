@@ -56,6 +56,9 @@
                   <td>
                     <button type="button" class="btn btn-primary fa fa-edit" data-toggle="modal" data-target="#edit" onclick="get(<?=$row->id_keberangkatan?>)"></button>
                     <button type="button" class="btn btn-danger fa fa-trash" onclick="deleteData(<?=$row->id_keberangkatan?>)"></button>
+                    <?php if ($row->status != 3): ?>
+                      <button type="button" class="btn btn-success" onclick="berangkat(<?=$row->id_keberangkatan?>)">Berangkat</button>
+                    <?php endif; ?>
                   </td>
                 </tr>
                 <?php endforeach;?>
@@ -108,7 +111,11 @@
                         </div>
                         <div class="form-group">
                           <label for="exampleInputPassword1">Waktu Keberangkatan</label>
-                          <input type="text" name="waktu" class="form-control" placeholder="Contoh: 12.00 WIB">
+                          <select name="waktu" class="form-control">
+                            <option value="">- Pilih Waktu -</option>
+                            <option value="10.00 WIB (Pagi)">10.00 WIB (Pagi)</option>
+                            <option value="14.00 WIB (Siang)">14.00 WIB (Siang)</option>
+                          </select>
                         </div>
                       </div>
                       <!-- /.box-body -->
@@ -161,7 +168,7 @@
                         </div>
                         <div class="form-group">
                           <label for="exampleInputPassword1">Waktu Keberangkatan</label>
-                          <input type="text" name="edit_waktu" id="edit_waktu" class="form-control" placeholder="Contoh: 12.00 WIB">
+                          <input type="text" name="edit_waktu" id="edit_waktu" class="form-control">
                         </div>
                         <input type="hidden" name="edit_keberangkatan" id="edit_keberangkatan" class="form-control" placeholder="Contoh: 12.00 WIB">
                       </div>
@@ -218,6 +225,35 @@
                     type: 'POST',
                     data: {
                         delete: true,
+                        id: id
+                    },
+                    success: function() {
+                        window.location = '<?= base_url('admin/jadwal-keberangkatan') ?>';
+                    }
+                });
+            }
+            });
+        }
+
+        function berangkat(id) {
+            swal({
+            title: "Bis Telah Berangkat?",
+            text: " ",
+            type: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Ya",
+            cancelButtonText: "Tidak",
+            closeOnConfirm: true,
+            closeOnCancel: true
+            },
+            function(isConfirm){
+            if (isConfirm) {
+                $.ajax({
+                    url: '<?= base_url('admin/jadwal-keberangkatan') ?>',
+                    type: 'POST',
+                    data: {
+                        berangkat: true,
                         id: id
                     },
                     success: function() {

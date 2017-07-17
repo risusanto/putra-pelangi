@@ -56,7 +56,7 @@
                   </tr>
                 <?php endfor; ?>
                   <tr>
-                    <?php $kursi = 37; for($x = 1; $x <= 1; $x++): ?>
+                    <?php $kursi = 36; for($x = 1; $x <= 1; $x++): ?>
                     <?php for($z = 0; $z <= 3; $z++): ?>
                       <?php if ($z < 3): ?>
                         <?php $kursi++ ?>

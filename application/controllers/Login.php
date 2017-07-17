@@ -24,7 +24,7 @@ class Login extends MY_Controller {
 			exit;
 		}
     }
-    
+
 	public function index()
 	{
 		if ($this->POST('login')) {
@@ -48,6 +48,7 @@ class Login extends MY_Controller {
 			redirect('login');
 			exit;
 		}
-		$this->load->view('login');
+    $this->data['title'] = 'Login'.$this->title;
+		$this->load->view('login',$this->data);
 	}
 }

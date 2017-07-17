@@ -24,6 +24,19 @@
           </div>
         </div>
         <div class="box-body">
+        <?=form_open('admin/index')?>
+          <div class="form-group">
+              <div class="form-group">
+                <label for="exampleInputPassword1">Rekening Pembayaran</label>
+                <input type="text" name="no_rekening" class="form-control" value="<?=$bayar->rekening?>" placeholder="Contoh: 8763547595 a.n Bambang (BNI)">
+              </div>
+          </div>
+          <div class="form-group">
+              <div class="form-group">
+                <input type="submit" class="btn btn-primary" name="rekening" value="SIMPAN">
+              </div>
+          </div>
+        <?=form_close()?>
         </div>
         <!-- /.box-body -->
         <div class="box-footer">

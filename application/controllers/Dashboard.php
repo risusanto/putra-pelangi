@@ -14,6 +14,7 @@ class Dashboard extends MY_Controller
             redirect('login');
             exit;
         }
+        $this->hapus_pesanan();
         $this->load->model('pelanggan_m');
         $this->data['profile'] = $this->pelanggan_m->get_row(['email' => $this->data['username']]);
     }
@@ -100,7 +101,7 @@ class Dashboard extends MY_Controller
         }
 
         if ($this->POST('selesai')) {
-          $this->pesanan_m->update($this->POST('id_pesanan'),['status' => 2]);
+          $this->pesanan_m->update($this->POST('id_pesanan'),['status' => 2,'batas_waktu' => date('d/m/Y h:i:s',strtotime(' + 1 day'))]);
           exit;
         }
 
@@ -149,6 +150,8 @@ class Dashboard extends MY_Controller
       $this->load->model('keberangkatan_m');
       $this->load->model('log_tiket_m');
       $this->load->model('konfirmasi_m');
+      $this->load->model('rekening_m');
+      $this->data['rekening'] = $this->rekening_m->get_row(['id' => 1])->rekening;
 
       $kode = $this->uri->segment(3);
       if (!isset($kode)) {
@@ -200,6 +203,8 @@ class Dashboard extends MY_Controller
       $this->load->model('rute_m');
       $this->load->model('keberangkatan_m');
       $this->load->model('log_tiket_m');
+      $this->load->model('rekening_m');
+      $this->data['rekening'] = $this->rekening_m->get_row(['id' => 1])->rekening;
 
       $kode = $this->uri->segment(3);
       if (!isset($kode)) {
@@ -218,5 +223,62 @@ class Dashboard extends MY_Controller
       $this->data['title'] = 'Invoice'.$this->title;
 
       $this->load->view('pelanggan/print',$this->data);
+    }
+
+    public function profile()
+    {
+      if ($this->POST('edit_profil')) {
+        $data = [
+          'nama' => $this->POST('nama'),
+          'alamat' => $this->POST('alamat'),
+          'telepon' => $this->POST('telepon')
+        ];
+        $this->pelanggan_m->update($this->data['profile']->email,$data);
+        $this->flashmsg('Profil diperbarui');
+        redirect('dashboard/profile');
+        exit;
+      }
+
+      if ($this->POST('pass_baru')) {
+        $this->load->model('user_m');
+        $req = ['password','new_password','confirm'];
+        if (!$this->user_m->required_input($req)) {
+          $this->flashmsg('Data harus lengkap!');
+          redirect('dashboard/profile');
+          exit;
+        }
+        $data = [
+          'username' => $this->data['profile']->email,
+          'password' => md5($this->POST('password'))
+        ];
+        $cek = $this->user_m->get_row($data);
+        if (!isset($cek)) {
+          $this->flashmsg('Password salah!','danger');
+          redirect('dashboard/profile');
+          exit;
+        }
+        if ($this->POST('new_password') != $this->POST('confirm')) {
+          $this->flashmsg('Password harus sama!','danger');
+          redirect('dashboard/profile');
+          exit;
+        }
+        $this->user_m->update($this->data['profile']->profile,['password' => md5($this->POST('new_password'))]);
+        $this->flashmsg('Password diganti');
+        redirect('dashboard/profile');
+        exit;
+      }
+      $this->data['title'] = 'Profile'.$this->title;
+      $this->data['content'] = 'pelanggan/profile';
+
+      $this->template($this->data);
+    }
+
+    private function hapus_pesanan(){
+      $this->load->model('pesanan_m');
+      $data = [
+        'status_pembayaran' => 'belum dibayar',
+        'batas_waktu' => date('d/m/Y h:i:s')
+      ];
+      $this->pesanan_m->delete_by($data);
     }
 }

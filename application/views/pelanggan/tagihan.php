@@ -24,7 +24,7 @@
                 <th>Rute</th>
                 <th>Waktu Keberangkatan</th>
                 <th>Tanggal Keberangkatan</th>
-                <th>Armada</th>
+                <th>Plat Bus</th>
                 <th>Status</th>
                 <th>Opsi</th>
               </tr>
@@ -37,7 +37,7 @@
                 <td><?=$this->rute_m->get_row(['id_rute' => $row->id_rute])->rute?></td>
                 <td><?=$row->waktu?></td>
                 <td><?=$row->tanggal?></td>
-                <td><?=$this->bus_m->get_row(['id_bus' => $row->id_bus])->nama?></td>
+                <td><?=$this->bus_m->get_row(['id_bus' => $row->id_bus])->no_polisi?></td>
                 <td><?=$row->status_pembayaran?></td>
                 <td>
                   <a href="<?=base_url('dashboard/invoice/'.$this->encrypt->encode($row->id_pesanan))?>" class="btn btn-block btn-success">Invoice</a>
@@ -52,7 +52,7 @@
                 <th>Rute</th>
                 <th>Waktu Keberangkatan</th>
                 <th>Tanggal Keberangkatan</th>
-                <th>Armada</th>
+                <th>Plat Bus</th>
                 <th>Status</th>
                 <th>Pilihan</th>
               </tr>

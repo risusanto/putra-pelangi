@@ -20,10 +20,16 @@ class Web extends MY_Controller
   public function rute()
   {
     $this->load->model('keberangkatan_m');
+    $this->load->model('log_tiket_m');
 
     $tables = ['rute','bus']; $jcond = ['id_rute','id_bus'];
     $this->data['keberangkatan'] = $this->keberangkatan_m->getDataJoin($tables, $jcond,'status != 0');
     $this->data['title'] = 'Rute '.$this->title;
     $this->load->view('home/rute',$this->data);
+  }
+
+  public function test()
+  {
+    echo date('d/m/Y h:i:s',strtotime(' + 1 day'));
   }
 }

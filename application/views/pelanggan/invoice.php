@@ -22,7 +22,6 @@
       <div class="col-xs-12">
         <h2 class="page-header">
           <i class="fa fa-globe"></i> PT Putra Pelangi Perkasa.
-          <small class="pull-right">Date: 2/10/2014</small>
         </h2>
       </div>
       <!-- /.col -->
@@ -42,8 +41,8 @@
       <div class="col-sm-4 invoice-col">
         <br>
         <b>ID Pesanan:</b> PP-<?=$invoice->id_pesanan?><br>
-        <b>Batas Pembayaran:</b> 2/22/2014<br>
-        <b>Rekening BNI:</b> 968-34567 (a.n Ari Susanto)
+        <b>Batas Pembayaran:</b> <?=$invoice->batas_waktu?><br>
+        <b>Rekening:</b> <?=$rekening?>
       </div>
       <!-- /.col -->
     </div>

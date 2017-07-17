@@ -17,6 +17,15 @@ class Admin extends MY_controller
     }
 
     public function index(){
+        $this->load->model('rekening_m');
+
+        if ($this->POST('rekening')) {
+          $this->rekening_m->update(1,['rekening' => $this->POST('no_rekening')]);
+          redirect('admin');
+          exit;
+        }
+
+        $this->data['bayar'] = $this->rekening_m->get_row(['id' => 1]);
         $this->data['title'] = 'Admin'.$this->title;
         $this->data['content'] = 'admin/dashboard';
 
@@ -28,6 +37,17 @@ class Admin extends MY_controller
         $this->load->model('keberangkatan_m');
         $this->load->model('bus_m');
         $this->load->model('log_tiket_m');
+
+        if ($this->POST('berangkat')) {
+          $this->load->model('pesanan_m');
+          $index = [
+            'id_keberangkatan' => $this->POST('id'),
+            'status' => 2
+          ];
+          $this->pesanan_m->update_where($index,['status' => 1]);
+          $this->keberangkatan_m->update($this->POST('id'),['status' => 3]);
+          exit;
+        }
 
         if ($this->POST('add')) {
             $required = ['rute','waktu','tanggal','bus'];

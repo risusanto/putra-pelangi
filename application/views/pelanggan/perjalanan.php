@@ -3,14 +3,8 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Data Tables
-        <small>advanced tables</small>
+        Pilih Perjalanan
       </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Tables</a></li>
-        <li class="active">Data tables</li>
-      </ol>
     </section>
 
     <!-- Main content -->
@@ -19,7 +13,7 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Data Table With Full Features</h3>
+              <h3 class="box-title">Data Perjalanan</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -30,7 +24,7 @@
                   <th>Rute</th>
                   <th>Waktu Keberangkatan</th>
                   <th>Tanggal Keberangkatan</th>
-                  <th>No. Polisi Bus</th>
+                  <th>Plat Bus</th>
                   <th>Sisa Kursi</th>
                   <th>Pilihan</th>
                 </tr>
@@ -60,7 +54,7 @@
                   <th>Rute</th>
                   <th>Waktu Keberangkatan</th>
                   <th>Tanggal Keberangkatan</th>
-                  <th>No. Polisi Bus</th>
+                  <th>Plat Bus</th>
                   <th>Sisa Kursi</th>
                   <th>Pilihan</th>
                 </tr>
