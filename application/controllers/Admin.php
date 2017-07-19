@@ -219,4 +219,50 @@ class Admin extends MY_controller
 
       $this->load->view('admin/detail',$this->data);
     }
+
+    public function daftar_pelanggan()
+    {
+      $this->load->model('pelanggan_m');
+      $this->load->model('user_m');
+
+      if ($this->POST('edit')) {
+        $req = ['email','nama','telepon'];
+        if (!$this->pelanggan_m->required_input($req)) {
+          $this->flashmsg('Data harus lengkap','warning');
+          redirect('admin/daftar-pelanggan');
+          exit;
+        }
+        $this->user_m->update($this->POST('id'),['username' => $this->POST('email')]);
+        $data = [
+          'nama' => $this->POST('nama'),
+          'telepon' => $this->POST('telepon')
+        ];
+        $this->pelanggan_m->update($this->POST('email'),$data);
+        $this->flashmsg('Data disimpan!');
+        redirect('admin/daftar-pelanggan');
+        exit;
+      }
+
+      if ($this->POST('get')) {
+      $data = $this->pelanggan_m->get_row(['email' => $this->POST('id')]);
+      echo json_encode($data);
+      exit;
+      }
+
+      if ($this->POST('delete')) {
+        $this->user_m->delete($this->POST('id'));
+        exit;
+      }
+
+      if ($this->POST('reset')) {
+        $this->user_m->update($this->POST('id'),['password' => md5('123456')]);
+        exit;
+      }
+
+      $this->data['pelanggan'] = $this->pelanggan_m->get();
+      $this->data['title'] = 'Invoice'.$this->title;
+      $this->data['content'] = 'admin/pelanggan';
+
+      $this->template($this->data,'admin');
+    }
 }

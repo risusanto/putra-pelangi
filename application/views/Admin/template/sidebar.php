@@ -35,6 +35,11 @@
             <i class="fa fa-bus"></i> <span>Konfirmasi Pembayaran</span>
           </a>
         </li>
+        <li>
+          <a href="<?=base_url('admin/daftar-pelanggan')?>">
+            <i class="fa fa-bus"></i> <span>Daftar Pelanggan</span>
+          </a>
+        </li>
       </ul>
     </section>
     <!-- /.sidebar -->
