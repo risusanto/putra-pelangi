@@ -31,8 +31,13 @@
           </a>
         </li>
         <li>
-          <a href="<?=base_url('direktur/log-penjualan')?>">
-            <i class="fa  fa-money"></i> <span>Log Penjualan</span>
+          <a href="<?=base_url('direktur/laporan-pembayaran')?>">
+            <i class="fa  fa-money"></i> <span>Laporan Pembayaran</span>
+          </a>
+        </li>
+        <li>
+          <a href="<?=base_url('direktur/laporan-penjualan')?>">
+            <i class="fa  fa-money"></i> <span>Laporan Penjualan</span>
           </a>
         </li>
       </ul>

@@ -82,7 +82,7 @@ class Direktur extends MY_Controller {
       $this->template($this->data,'direktur');
     }
 
-    public function log_penjualan()
+    public function laporan_pembayaran()
     {
       $this->load->model('log_tiket_m');
       $this->load->model('pelanggan_m');
@@ -91,9 +91,52 @@ class Direktur extends MY_Controller {
 
       $tables = ['keberangkatan','pesanan']; $jcond = ['id_keberangkatan','id_pesanan'];
       $this->data['tiket'] = $this->log_tiket_m->getDataJoin($tables,$jcond);
-      $this->data['title'] = 'Log Penjualan Tiket'.$this->title;
+      $this->data['title'] = 'Laporan Pembayaran'.$this->title;
       $this->data['content'] = 'direktur/log';
 
       $this->template($this->data,'direktur');
+    }
+
+    public function print_pembayaran()
+    {
+      $this->load->model('log_tiket_m');
+      $this->load->model('pelanggan_m');
+      $this->load->model('rute_m');
+      $this->load->model('bus_m');
+
+      $tables = ['keberangkatan','pesanan']; $jcond = ['id_keberangkatan','id_pesanan'];
+      $this->data['tiket'] = $this->log_tiket_m->getDataJoin($tables,$jcond);
+      $this->data['title'] = 'Laporan Pembayaran'.$this->title;
+
+      $this->load->view('direktur/print-pembayaran',$this->data);
+    }
+
+    public function laporan_penjualan()
+    {
+      $this->load->model('log_tiket_m');
+      $this->load->model('pelanggan_m');
+      $this->load->model('rute_m');
+      $this->load->model('bus_m');
+
+      $tables = ['keberangkatan','pesanan']; $jcond = ['id_keberangkatan','id_pesanan'];
+      $this->data['tiket'] = $this->log_tiket_m->getDataJoin($tables,$jcond);
+      $this->data['title'] = 'Laporan Penjualan'.$this->title;
+      $this->data['content'] = 'direktur/laporan-penjualan';
+
+      $this->template($this->data,'direktur');
+    }
+
+    public function print_penjualan()
+    {
+      $this->load->model('log_tiket_m');
+      $this->load->model('pelanggan_m');
+      $this->load->model('rute_m');
+      $this->load->model('bus_m');
+
+      $tables = ['keberangkatan','pesanan']; $jcond = ['id_keberangkatan','id_pesanan'];
+      $this->data['tiket'] = $this->log_tiket_m->getDataJoin($tables,$jcond);
+      $this->data['title'] = 'Laporan Penjualan'.$this->title;
+
+      $this->load->view('direktur/print-penjualan',$this->data);
     }
 }
