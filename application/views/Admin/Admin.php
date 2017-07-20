@@ -280,47 +280,4 @@ class Admin extends MY_controller
 
       $this->template($this->data,'admin');
     }
-
-    public function laporan_penjualan()
-    {
-      $this->load->model('log_tiket_m');
-      $this->load->model('pelanggan_m');
-      $this->load->model('rute_m');
-      $this->load->model('bus_m');
-
-      $tables = ['keberangkatan','pesanan']; $jcond = ['id_keberangkatan','id_pesanan'];
-      $this->data['tiket'] = $this->log_tiket_m->getDataJoin($tables,$jcond);
-      $this->data['title'] = 'Laporan Penjualan'.$this->title;
-      $this->data['content'] = 'admin/laporan-penjualan';
-
-      $this->template($this->data,'admin');
-    }
-
-    public function print_pembayaran()
-    {
-      $this->load->model('log_tiket_m');
-      $this->load->model('pelanggan_m');
-      $this->load->model('rute_m');
-      $this->load->model('bus_m');
-
-      $tables = ['keberangkatan','pesanan']; $jcond = ['id_keberangkatan','id_pesanan'];
-      $this->data['tiket'] = $this->log_tiket_m->getDataJoin($tables,$jcond);
-      $this->data['title'] = 'Laporan Pembayaran'.$this->title;
-
-      $this->load->view('admin/print-pembayaran',$this->data);
-    }
-
-    public function print_penjualan()
-    {
-      $this->load->model('log_tiket_m');
-      $this->load->model('pelanggan_m');
-      $this->load->model('rute_m');
-      $this->load->model('bus_m');
-
-      $tables = ['keberangkatan','pesanan']; $jcond = ['id_keberangkatan','id_pesanan'];
-      $this->data['tiket'] = $this->log_tiket_m->getDataJoin($tables,$jcond);
-      $this->data['title'] = 'Laporan Penjualan'.$this->title;
-
-      $this->load->view('admin/print-penjualan',$this->data);
-    }
 }

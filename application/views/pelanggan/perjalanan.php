@@ -40,9 +40,7 @@
                   <td><?=$row->no_polisi?></td>
                   <td><?=$this->log_tiket_m->countTicket(['id_keberangkatan'=>$row->id_keberangkatan])?> / <?=$row->kapasitas?></td>
                   <td>
-                  <?php if ($profile->pesanan == 0): ?>
                     <a href="<?=base_url('dashboard/pesan-tiket/'.$this->encrypt->encode($row->id_keberangkatan))?>" class="btn btn-block btn-success">Pesan</a>
-                  <?php endif; ?>
                   </td>
                 </tr>
                 <?php endif;?>

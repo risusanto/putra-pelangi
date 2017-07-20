@@ -148,8 +148,23 @@
       <?php endif; ?>
       <div class="col-md-6">
         <div class="box">
+          <?php
+          $jml = 0; $bernama = 0;
+            foreach ($pesanan as $key) {
+              if ($key->atas_nama != '-') {
+                $bernama++;
+              }
+              $jml++;
+            }
+           ?>
           <div class="box-header">
-            <h3 class="box-title">Tiket Pesanan <button type="button" class="btn btn-warning" onclick="batal(<?= $id_pesanan ?>)">Batal</button> <button type="button" class="btn btn-success" onclick="selesai(<?= $id_pesanan ?>)">Selesai</button></h3>
+            <h3 class="box-title">Tiket Pesanan <button type="button" class="btn btn-warning" onclick="batal(<?= $id_pesanan ?>)">Batal</button>
+              <?php if ($bernama == $jml): ?>
+                <button type="button" class="btn btn-success" onclick="selesai(<?= $id_pesanan ?>)">Selesai</button>
+                <?php else: ?>
+                  <button type="button" class="btn btn-success" onclick="berinama()">Selesai</button>
+              <?php endif; ?>
+            </h3>
           </div>
           <!-- /.box-header -->
           <div class="box-body no-padding">
@@ -158,14 +173,21 @@
                 <th style="width: 10px">#</th>
                 <th>ID Tiket</th>
                 <th>No. Kursi</th>
+                <th>Atas Nama</th>
                 <th>Harga</th>
+                <th>Opsi</th>
               </tr>
               <?php $total = 0; $i = 1; foreach ($pesanan as $row): ?>
                 <tr>
                   <td><?=$i++?></td>
                   <td>TK<?=$row->id_log?></td>
                   <td><?=$row->kursi?></td>
-                  <td>Rp. <?=number_format($biaya,2,",",".")?></td>
+                  <td><?=$row->atas_nama?></td>
+                  <td>Rp. <?=number_format($biaya,0,",",".")?></td>
+                  <td>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit" onclick="get(<?=$row->id_log?>)">Isi Nama</button>
+                    <button type="button" class="btn btn-danger" onclick="hapus(<?=$row->id_log?>)">Hapus</button>
+                  </td>
                 </tr>
                 <?php $total += $biaya ?>
               <?php endforeach; ?>
@@ -173,7 +195,7 @@
                 <td><strong>Total</strong></td>
                 <td></td>
                 <td></td>
-                <td><strong>Rp. <?=number_format($total,2,",",".")?></strong></td>
+                <td><strong>Rp. <?=number_format($total,0,",",".")?></strong></td>
               </tr>
             </table>
           </div>
@@ -188,6 +210,36 @@
   <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+
+<div class="modal fade" id="edit" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Isi Nama</h4>
+        </div>
+        <div class="modal-body">
+          <?=form_open('dashboard/pesan-tiket/'.$kode)?>
+              <div class="box-body">
+                <div class="form-group">
+                  <label>Atas Nama</label>
+                  <input type="text" value=""  name="nama" class="form-control">
+                  <input type="hidden" name="id" id="id" value="">
+                </div>
+              </div>
+              <!-- /.box-body -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
+          <input type="submit" name ="namai" class="btn btn-primary" value="Simpan">
+        <?=form_close()?>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
 
 <script type="text/javascript">
 
@@ -221,6 +273,23 @@
         });
     }
 
+    function get(id) {
+        $.ajax({
+            url: '<?= base_url('dashboard/pesan-tiket/'.$kode) ?>',
+            type: 'POST',
+            data: {
+                id: id,
+                get: true
+            },
+            success: function(response) {
+                response = JSON.parse(response);
+                $('#id').val(response.id_log);
+            }
+        });
+    }
+
+    function berinama() {swal('Harap isi nama seluruh tiket terlebih dahulu')}
+
     function batal(id_pesanan) {
         swal({
         title: "Batalkan pesanan?",
@@ -248,6 +317,36 @@
         }
         });
     }
+
+    function hapus(id) {
+        swal({
+        title: "Batalkan Tiket?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Ya, Batalkan",
+        cancelButtonText: "Tidak",
+        closeOnConfirm: true,
+        closeOnCancel: true
+        },
+        function(isConfirm){
+        if (isConfirm) {
+            $.ajax({
+                url: '<?= base_url('dashboard/pesan-tiket/'.$kode) ?>',
+                type: 'POST',
+                data: {
+                    hapus: true,
+                    id: id,
+                },
+                success: function() {
+                    window.location = '<?= base_url('dashboard/pesan-tiket/'.$kode) ?>';
+                }
+            });
+        }
+        });
+    }
+
+
 
     function selesai(id_pesanan) {
         swal({

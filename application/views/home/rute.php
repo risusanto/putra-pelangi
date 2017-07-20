@@ -87,6 +87,7 @@
                 <th>Waktu Keberangkatan</th>
                 <th>Tanggal Keberangkatan</th>
                 <th>Sisa Kursi</th>
+                <th>Pilihan</th>
               </tr>
               </thead>
               <tbody>
@@ -98,6 +99,7 @@
                 <td><?=$row->waktu?></td>
                 <td><?=$row->tanggal?></td>
                 <td><?=$this->log_tiket_m->countTicket(['id_keberangkatan'=>$row->id_keberangkatan])?> / <?=$row->kapasitas?></td>
+                <td><a href="<?=base_url('dashboard/pesan-tiket/'.$this->encrypt->encode($row->id_keberangkatan))?>" class="btn btn-block btn-success">Pesan</a></td>
               </tr>
               <?php endif;?>
               <?php endforeach;?>

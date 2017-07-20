@@ -40,6 +40,16 @@
             <i class="fa fa-bus"></i> <span>Daftar Pelanggan</span>
           </a>
         </li>
+        <li>
+          <a href="<?=base_url('admin/laporan-pembayaran')?>">
+            <i class="fa  fa-money"></i> <span>Laporan Pembayaran</span>
+          </a>
+        </li>
+        <li>
+          <a href="<?=base_url('admin/laporan-penjualan')?>">
+            <i class="fa  fa-money"></i> <span>Laporan Penjualan</span>
+          </a>
+        </li>
       </ul>
     </section>
     <!-- /.sidebar -->

@@ -24,6 +24,14 @@ class Dashboard extends MY_Controller
           redirect('dashboard/pesan-tiket/'.$this->data['profile']->pesanan);
           exit;
         }
+        $this->load->model('pesanan_m');
+
+        if ($this->POST('delete')) {
+          $this->notifikasi_m->delete_by(['pelanggan' => $this->data['username']]);
+          exit;
+        }
+        $this->load->model('notifikasi_m');
+        $this->data['notif'] = $this->notifikasi_m->get();
         $this->data['title'] = 'Dashboard'.$this->title;
         $this->data['content'] = 'pelanggan/dashboard';
 
@@ -77,6 +85,23 @@ class Dashboard extends MY_Controller
           $this->pesanan_m->insert($data_pesanan);
         }
 
+        if ($this->POST('get')) {
+  				$data = $this->log_tiket_m->get_row(['id_log' => $this->POST('id')]);
+  				echo json_encode($data);
+  				exit;
+		    }
+
+        if ($this->POST('namai')) {
+          $this->log_tiket_m->update($this->POST('id'),['atas_nama' => $this->POST('nama')]);
+          redirect('dashboard/pesan-tiket/'.$kode);
+          exit;
+        }
+
+        if ($this->POST('hapus')) {
+          $this->log_tiket_m->delete($this->POST('id'));
+          exit;
+        }
+
         $data_pesanan = [
           'pelanggan' => $this->data['profile']->email,
           'id_keberangkatan' => $id,
@@ -101,7 +126,7 @@ class Dashboard extends MY_Controller
         }
 
         if ($this->POST('selesai')) {
-          $this->pesanan_m->update($this->POST('id_pesanan'),['status' => 2,'batas_waktu' => date('d/m/Y h:i:s',strtotime(' + 1 day'))]);
+          $this->pesanan_m->update($this->POST('id_pesanan'),['status' => 2,'batas_waktu' => date('d-m-Y h:i:s',strtotime(' + 1 day'))]);
           exit;
         }
 
@@ -275,10 +300,23 @@ class Dashboard extends MY_Controller
 
     private function hapus_pesanan(){
       $this->load->model('pesanan_m');
-      $data = [
-        'status_pembayaran' => 'belum dibayar',
-        'batas_waktu' => date('d/m/Y h:i:s')
-      ];
-      $this->pesanan_m->delete_by($data);
+      $this->load->model('notifikasi_m');
+
+      $pesanan = $this->pesanan_m->get();
+
+      foreach ($pesanan as $key) {
+        $anu = $key->batas_waktu;
+        $now = date('d/m/Y',strtotime($anu));
+        $your_date = date('d/m/Y',strtotime('now'));
+        $intv =  $now - $your_date;
+        if ($intv < 0 && $key->batas_waktu != NULL) {
+          $this->pesanan_m->delete($key->id_pesanan);
+          $notif = [
+            'pelanggan' => $key->pelanggan,
+            'pesan' => 'Pesanan anda telah dibatalkan, silahkan lakukan pemesanan kembali'
+          ];
+          $this->notifikasi_m->insert($notif);
+        }
+      }
     }
 }

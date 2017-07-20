@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: 17 Jul 2017 pada 20.34
+-- Generation Time: 20 Jul 2017 pada 22.14
 -- Versi Server: 5.7.17-log
 -- PHP Version: 7.0.17
 
@@ -80,13 +80,6 @@ CREATE TABLE `konfirmasi` (
   `pesan` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data untuk tabel `konfirmasi`
---
-
-INSERT INTO `konfirmasi` (`id_konfirmasi`, `tanggal_pembayaran`, `id_pesanan`, `pelanggan`, `jumlah_pembayaran`, `pesan`) VALUES
-(2, '2017-07-17', 3, 'pelanggan@pelanggan.com', 434343, 'ewew');
-
 -- --------------------------------------------------------
 
 --
@@ -100,21 +93,31 @@ CREATE TABLE `log_tiket` (
   `status` int(1) DEFAULT NULL,
   `id_rute` int(6) DEFAULT NULL,
   `kursi` int(6) DEFAULT NULL,
-  `id_pesanan` bigint(20) DEFAULT NULL
+  `id_pesanan` bigint(20) DEFAULT NULL,
+  `atas_nama` varchar(255) DEFAULT '-'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data untuk tabel `log_tiket`
 --
 
-INSERT INTO `log_tiket` (`id_log`, `id_keberangkatan`, `pelanggan`, `status`, `id_rute`, `kursi`, `id_pesanan`) VALUES
-(1, 6, 'pelanggan@pelanggan.com', 3, 1, 3, 1),
-(2, 6, 'pelanggan@pelanggan.com', 3, 1, 4, 1),
-(3, 6, 'pelanggan@pelanggan.com', 3, 1, 2, 2),
-(4, 7, 'pelanggan@pelanggan.com', 3, 1, 1, 3),
-(5, 7, 'pelanggan@pelanggan.com', 3, 1, 2, 3),
-(6, 7, 'pelanggan@pelanggan.com', 3, 1, 5, 3),
-(7, 7, 'risusanto@outlook.com', 3, 1, 19, 4);
+INSERT INTO `log_tiket` (`id_log`, `id_keberangkatan`, `pelanggan`, `status`, `id_rute`, `kursi`, `id_pesanan`, `atas_nama`) VALUES
+(27, 7, 'pelanggan@pelanggan.com', 3, 1, 11, 34, 'Ari Susanto'),
+(28, 7, 'pelanggan@pelanggan.com', 3, 1, 2, 34, 'Cynthia Caroline'),
+(35, 7, 'pelanggan@pelanggan.com', 3, 1, 35, 37, 'dsdsds'),
+(36, 7, 'pelanggan@pelanggan.com', 3, 1, 36, 37, 'dsdsds');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `notifikasi`
+--
+
+CREATE TABLE `notifikasi` (
+  `id_notifikasi` bigint(20) NOT NULL,
+  `pelanggan` varchar(255) DEFAULT NULL,
+  `pesan` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -136,7 +139,7 @@ CREATE TABLE `pelanggan` (
 --
 
 INSERT INTO `pelanggan` (`email`, `nama`, `telepon`, `alamat`, `status`, `pesanan`) VALUES
-('pelanggan@pelanggan.com', 'Ari Susanto', '082280940094', 'Layo', 1, 'okQ1HrluWw9XeeJGGIM8pa3miK5ViybijULM2Dn04PlWDANBZUQ1s7Zn8CA8n2ZDglhYI3nGUQ4L~uYEleZ8KA--'),
+('pelanggan@pelanggan.com', 'Ari Susanto', '082280940094', 'Layo', 1, 'SFdXZbyAk3Gjgte1a0PsaMht~aJt~OL9dBAIELWn9jXsi6OtJ5805zLjGB4POrHNdwExYoVb.oqq6Kz.qcKatg--'),
 ('risusanto@outlook.com', 'Ari Susanto', NULL, 'palembang', 1, '.VmswKcrWz2y3LcVD7IrxYnmUbIca1KCDqaxwmdDhO17yN~.vnywMKJ6QK3ew.VfYAqs3uY43F.nHVhptq2w2w--');
 
 -- --------------------------------------------------------
@@ -159,10 +162,8 @@ CREATE TABLE `pesanan` (
 --
 
 INSERT INTO `pesanan` (`id_pesanan`, `pelanggan`, `id_keberangkatan`, `status`, `status_pembayaran`, `batas_waktu`) VALUES
-(1, 'pelanggan@pelanggan.com', 6, 1, 'LUNAS', NULL),
-(2, 'pelanggan@pelanggan.com', 6, 1, 'LUNAS', NULL),
-(3, 'pelanggan@pelanggan.com', 7, 2, 'menunggu konfirmasi', NULL),
-(4, 'risusanto@outlook.com', 7, 2, 'belum dibayar', '19/07/2017 03:19:22');
+(34, 'pelanggan@pelanggan.com', 7, 2, 'LUNAS', '22-07-2017 04:07:17'),
+(37, 'pelanggan@pelanggan.com', 7, 2, 'belum dibayar', '22-07-2017 04:42:55');
 
 -- --------------------------------------------------------
 
@@ -283,6 +284,13 @@ ALTER TABLE `log_tiket`
   ADD KEY `fk_id_pesanan` (`id_pesanan`);
 
 --
+-- Indexes for table `notifikasi`
+--
+ALTER TABLE `notifikasi`
+  ADD PRIMARY KEY (`id_notifikasi`),
+  ADD KEY `fk_pelanggaan_notifikasi` (`pelanggan`);
+
+--
 -- Indexes for table `pelanggan`
 --
 ALTER TABLE `pelanggan`
@@ -339,17 +347,22 @@ ALTER TABLE `keberangkatan`
 -- AUTO_INCREMENT for table `konfirmasi`
 --
 ALTER TABLE `konfirmasi`
-  MODIFY `id_konfirmasi` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_konfirmasi` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `log_tiket`
 --
 ALTER TABLE `log_tiket`
-  MODIFY `id_log` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_log` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+--
+-- AUTO_INCREMENT for table `notifikasi`
+--
+ALTER TABLE `notifikasi`
+  MODIFY `id_notifikasi` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 --
 -- AUTO_INCREMENT for table `pesanan`
 --
 ALTER TABLE `pesanan`
-  MODIFY `id_pesanan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_pesanan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 --
 -- AUTO_INCREMENT for table `role`
 --
@@ -386,6 +399,12 @@ ALTER TABLE `log_tiket`
   ADD CONSTRAINT `fk_id_pesanan` FOREIGN KEY (`id_pesanan`) REFERENCES `pesanan` (`id_pesanan`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_id_rute` FOREIGN KEY (`id_rute`) REFERENCES `rute` (`id_rute`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_pelanggan` FOREIGN KEY (`pelanggan`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `notifikasi`
+--
+ALTER TABLE `notifikasi`
+  ADD CONSTRAINT `fk_pelanggaan_notifikasi` FOREIGN KEY (`pelanggan`) REFERENCES `pelanggan` (`email`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `pelanggan`
