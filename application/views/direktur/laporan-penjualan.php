@@ -3,8 +3,8 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Laporan Pembayaran
-        <small>Anda dapat melihat tiket yang telah dipesan</small>
+        Laporan Penjualan
+        <small>Anda dapat melihat tiket yang telah terjual</small>
       </h1>
       <?= $this->session->flashdata('msg') ?>
     </section>

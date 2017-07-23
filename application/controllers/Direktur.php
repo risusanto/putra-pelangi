@@ -108,7 +108,7 @@ class Direktur extends MY_Controller {
       $this->data['tiket'] = $this->log_tiket_m->getDataJoin($tables,$jcond);
       $this->data['title'] = 'Laporan Pembayaran'.$this->title;
 
-      $this->load->view('direktur/print-pembayaran',$this->data);
+      $this->load->view('laporan/pembayaran',$this->data);
     }
 
     public function laporan_penjualan()
@@ -137,6 +137,6 @@ class Direktur extends MY_Controller {
       $this->data['tiket'] = $this->log_tiket_m->getDataJoin($tables,$jcond);
       $this->data['title'] = 'Laporan Penjualan'.$this->title;
 
-      $this->load->view('direktur/print-penjualan',$this->data);
+      $this->load->view('laporan/penjualan',$this->data);
     }
 }

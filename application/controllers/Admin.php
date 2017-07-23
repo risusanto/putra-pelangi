@@ -307,7 +307,7 @@ class Admin extends MY_controller
       $this->data['tiket'] = $this->log_tiket_m->getDataJoin($tables,$jcond);
       $this->data['title'] = 'Laporan Pembayaran'.$this->title;
 
-      $this->load->view('admin/print-pembayaran',$this->data);
+      $this->load->view('laporan/pembayaran',$this->data);
     }
 
     public function print_penjualan()
@@ -321,6 +321,6 @@ class Admin extends MY_controller
       $this->data['tiket'] = $this->log_tiket_m->getDataJoin($tables,$jcond);
       $this->data['title'] = 'Laporan Penjualan'.$this->title;
 
-      $this->load->view('admin/print-penjualan',$this->data);
+      $this->load->view('laporan/penjualan',$this->data);
     }
 }
