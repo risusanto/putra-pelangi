@@ -74,7 +74,7 @@
 			</div>
 		</div>
 		<div class="content" style="margin: 0 auto; width:100%;">
-			<p style="margin-top: -30px; width: 100%; font-weight: bold; font-size: 22px; text-align: center; margin-bottom: 30px;">Laporan Pembayarab</p>
+			<p style="margin-top: -30px; width: 100%; font-weight: bold; font-size: 22px; text-align: center; margin-bottom: 30px;">Laporan Pembayaran</p>
             <table style="width: 100%;">
 							<thead>
 		          <tr>
