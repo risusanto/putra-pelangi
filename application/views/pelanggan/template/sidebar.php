@@ -30,6 +30,11 @@
             <i class="fa fa-file-text"></i> <span>Tagihan & Jadwal</span>
           </a>
         </li>
+        <li>
+          <a href="<?=base_url('dashboard/log')?>">
+            <i class="fa fa-bus"></i> <span>Log</span>
+          </a>
+        </li>
       </ul>
     </section>
     <!-- /.sidebar -->

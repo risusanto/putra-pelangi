@@ -46,6 +46,8 @@ class Dashboard extends MY_Controller
         $this->load->model('log_tiket_m');
         $this->load->model('keberangkatan_m');
         $this->load->library('encrypt');
+        $this->load->model('pilihan_rute_m');
+        $this->load->model('rute_m');
 
         $tables = ['rute','bus']; $jcond = ['id_rute','id_bus'];
         $this->data['keberangkatan'] = $this->keberangkatan_m->getDataJoin($tables, $jcond,'status != 0');
@@ -55,8 +57,32 @@ class Dashboard extends MY_Controller
         $this->template($this->data);
     }
 
+    public function pilih_rute()
+    {
+      $this->load->model('pilihan_rute_m');
+      $this->load->library('encrypt');
+      $id_keberangkatan = $this->uri->segment(3);
+      if (!isset($id_keberangkatan)) {
+          redirect('admin/jadwal-keberangkatan');
+      }
+      $this->load->model('keberangkatan_m');
+      $result = $this->keberangkatan_m->get_row(['id_keberangkatan' => $id_keberangkatan]);
+      if (!isset($result)) {
+          redirect('admin/jadwal-keberangkatan');
+      }
+
+      $param = ['id_keberangkatan' => $result->id_keberangkatan];
+      $tables = ['rute']; $jcond = ['id_rute'];
+      $this->data['rute'] = $this->pilihan_rute_m->getDataJoin($tables, $jcond, $param);
+      $this->data['title'] = 'Pilih Rute'.$this->title;
+      $this->data['content'] = 'pelanggan/pilihan-rute';
+
+      $this->template($this->data);
+    }
+
     public function pesan_tiket(){
         $kode = $this->uri->segment(3);
+        $rute = $this->uri->segment(4);
         if(!isset($kode)){
             redirect('dashboard/perjalanan');
             exit;
@@ -66,6 +92,7 @@ class Dashboard extends MY_Controller
         $this->load->model('pesanan_m');
         $this->load->model('bus_m');
         $this->load->model('rute_m');
+        $this->load->model('pilihan_rute_m');
         $this->load->library('encrypt');
         $id = $this->encrypt->decode($kode);
 
@@ -82,6 +109,9 @@ class Dashboard extends MY_Controller
             'pelanggan' => $this->data['profile']->email,
             'id_keberangkatan' => $id
           ];
+          if (isset($rute)) {
+            $data_pesanan['id_rute'] = $rute;
+          }
           $this->pesanan_m->insert($data_pesanan);
         }
 
@@ -93,7 +123,7 @@ class Dashboard extends MY_Controller
 
         if ($this->POST('namai')) {
           $this->log_tiket_m->update($this->POST('id'),['atas_nama' => $this->POST('nama')]);
-          redirect('dashboard/pesan-tiket/'.$kode);
+          redirect('dashboard/pesan-tiket/'.$kode.'/'.$rute);
           exit;
         }
 
@@ -115,7 +145,7 @@ class Dashboard extends MY_Controller
             'id_keberangkatan' => $id,
             'pelanggan' => $this->data['username'],
             'status' => 3,
-            'id_rute' => $result->id_rute
+            'id_rute' => $rute
           ];
           $this->log_tiket_m->insert($data_pesan);
         }
@@ -131,7 +161,7 @@ class Dashboard extends MY_Controller
         }
 
         $this->data['id_pesanan'] = $this->pesanan_m->get_row($data_pesanan)->id_pesanan;
-        $this->data['biaya'] = $this->rute_m->get_row(['id_rute' => $result->id_rute])->biaya;
+        //$this->data['biaya'] = $this->rute_m->get_row(['id_rute' => $result->id_rute])->biaya;
         $this->data['pesanan'] = $this->log_tiket_m->get(['id_pesanan'=>$this->data['id_pesanan'],'status' => 3]);
         $this->data['kapasitas'] = $this->bus_m->get_row(['id_bus' => $result->id_bus])->kapasitas;
         $this->data['title'] = 'Pilih Kursi'.$this->title;
@@ -211,9 +241,7 @@ class Dashboard extends MY_Controller
         exit;
       }
 
-      $id_rute = $this->keberangkatan_m->get_row(['id_keberangkatan' => $cek->id_keberangkatan])->id_rute;
       $this->data['invoice'] = $cek;
-      $this->data['total'] = $this->rute_m->get_row(['id_rute' => $id_rute])->biaya * $this->log_tiket_m->get_num_row(['id_pesanan' => $cek->id_pesanan]);
       $this->data['pesanan'] = $this->log_tiket_m->get(['id_pesanan' => $cek->id_pesanan]);
       $this->data['title'] = 'Invoice'.$this->title;
       $this->data['content'] = 'pelanggan/invoice';
@@ -241,9 +269,8 @@ class Dashboard extends MY_Controller
         redirect('dashboard/tagihan');
         exit;
       }
-      $id_rute = $this->keberangkatan_m->get_row(['id_keberangkatan' => $cek->id_keberangkatan])->id_rute;
+
       $this->data['invoice'] = $cek;
-      $this->data['total'] = $this->rute_m->get_row(['id_rute' => $id_rute])->biaya * $this->log_tiket_m->get_num_row(['id_pesanan' => $cek->id_pesanan]);
       $this->data['pesanan'] = $this->log_tiket_m->get(['id_pesanan' => $cek->id_pesanan]);
       $this->data['title'] = 'Invoice'.$this->title;
 
@@ -318,5 +345,20 @@ class Dashboard extends MY_Controller
           $this->notifikasi_m->insert($notif);
         }
       }
+    }
+
+    public function log()
+    {
+      $this->load->model('log_tiket_m');
+      $this->load->model('pelanggan_m');
+      $this->load->model('rute_m');
+      $this->load->model('bus_m');
+
+      $tables = ['keberangkatan','pesanan']; $jcond = ['id_keberangkatan','id_pesanan'];
+      $this->data['tiket'] = $this->log_tiket_m->getDataJoin($tables,$jcond,['log_tiket.pelanggan' => $this->data['username']]);
+      $this->data['title'] = 'Laporan Pembayaran'.$this->title;
+      $this->data['content'] = 'pelanggan/log';
+
+      $this->template($this->data,'pelanggan');
     }
 }

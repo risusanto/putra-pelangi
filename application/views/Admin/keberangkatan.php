@@ -37,7 +37,7 @@
                 <tr>
                   <td><?=$i?></td>
                   <td >KB<?=$row->id_rute?></td>
-                  <td><?=$row->asal?> - <?=$row->tujuan?> </td>
+                  <td><a href="<?=base_url('admin/lihat-rute/'.$row->id_keberangkatan)?>">Lihat Rute</a></td>
                   <td><span class="label label-success"><?=$row->waktu?></span></td>
                   <td><?=$row->tanggal?></td>
                   <td><?=$row->nama?></td>
@@ -57,8 +57,9 @@
                     <button type="button" class="btn btn-primary fa fa-edit" data-toggle="modal" data-target="#edit" onclick="get(<?=$row->id_keberangkatan?>)"></button>
                     <button type="button" class="btn btn-danger fa fa-trash" onclick="deleteData(<?=$row->id_keberangkatan?>)"></button>
                     <?php if ($row->status != 3): ?>
-                      <button type="button" class="btn btn-success" onclick="berangkat(<?=$row->id_keberangkatan?>)">Berangkat</button>
+                      <a href="#" onclick="berangkat(<?=$row->id_keberangkatan?>)">Berangkat</a>
                     <?php endif; ?>
+                    | <a href="<?=base_url('admin/surat-jalan/'.$row->id_keberangkatan)?>" target="_blank">Surat Jalan</a>
                   </td>
                 </tr>
                 <?php endforeach;?>

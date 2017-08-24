@@ -21,7 +21,6 @@
               <thead>
               <tr>
                 <th>ID</th>
-                <th>Rute</th>
                 <th>Waktu Keberangkatan</th>
                 <th>Tanggal Keberangkatan</th>
                 <th>Plat Bus</th>
@@ -34,7 +33,6 @@
               <?php if ($row->status != 3):?>
               <tr>
                 <td>PP-<?=$row->id_pesanan?></td>
-                <td><?=$this->rute_m->get_row(['id_rute' => $row->id_rute])->rute?></td>
                 <td><?=$row->waktu?></td>
                 <td><?=$row->tanggal?></td>
                 <td><?=$this->bus_m->get_row(['id_bus' => $row->id_bus])->no_polisi?></td>
@@ -49,7 +47,6 @@
               <tfoot>
               <tr>
                 <th>ID</th>
-                <th>Rute</th>
                 <th>Waktu Keberangkatan</th>
                 <th>Tanggal Keberangkatan</th>
                 <th>Plat Bus</th>

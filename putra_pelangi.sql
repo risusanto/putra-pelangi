@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: 20 Jul 2017 pada 22.14
+-- Generation Time: 24 Agu 2017 pada 13.49
 -- Versi Server: 5.7.17-log
 -- PHP Version: 7.0.17
 
@@ -62,8 +62,8 @@ CREATE TABLE `keberangkatan` (
 --
 
 INSERT INTO `keberangkatan` (`id_keberangkatan`, `id_rute`, `waktu`, `tanggal`, `id_bus`, `status`) VALUES
-(6, 1, '12.24', '2017-07-08', 5, 3),
-(7, 1, '14.00 WIB (Siang)', '2017-07-20', 5, 1);
+(9, 3, '10.00 WIB (Pagi)', '2017-08-04', 5, 3),
+(10, 1, '10.00 WIB (Pagi)', '2017-08-03', 5, 1);
 
 -- --------------------------------------------------------
 
@@ -102,10 +102,12 @@ CREATE TABLE `log_tiket` (
 --
 
 INSERT INTO `log_tiket` (`id_log`, `id_keberangkatan`, `pelanggan`, `status`, `id_rute`, `kursi`, `id_pesanan`, `atas_nama`) VALUES
-(27, 7, 'pelanggan@pelanggan.com', 3, 1, 11, 34, 'Ari Susanto'),
-(28, 7, 'pelanggan@pelanggan.com', 3, 1, 2, 34, 'Cynthia Caroline'),
-(35, 7, 'pelanggan@pelanggan.com', 3, 1, 35, 37, 'dsdsds'),
-(36, 7, 'pelanggan@pelanggan.com', 3, 1, 36, 37, 'dsdsds');
+(4, 9, 'pelanggan@pelanggan.com', 3, 3, 3, 6, 'ari1'),
+(5, 9, 'pelanggan@pelanggan.com', 3, 3, 4, 6, 'ari2'),
+(8, 9, 'pelanggan@pelanggan.com', 3, 1, 5, 8, 'sa'),
+(9, 9, 'pelanggan@pelanggan.com', 3, 1, 10, 8, 'sasa'),
+(14, 9, 'admin', 3, 1, 15, 12, 'ad'),
+(15, 9, 'admin', 3, 1, 16, 12, 'asdm');
 
 -- --------------------------------------------------------
 
@@ -139,7 +141,9 @@ CREATE TABLE `pelanggan` (
 --
 
 INSERT INTO `pelanggan` (`email`, `nama`, `telepon`, `alamat`, `status`, `pesanan`) VALUES
-('pelanggan@pelanggan.com', 'Ari Susanto', '082280940094', 'Layo', 1, 'SFdXZbyAk3Gjgte1a0PsaMht~aJt~OL9dBAIELWn9jXsi6OtJ5805zLjGB4POrHNdwExYoVb.oqq6Kz.qcKatg--'),
+('082280940094', 'Ausanto', 'risusanto@outlook.co', 'ksakskak', 1, '0'),
+('admin', NULL, NULL, NULL, 1, '0'),
+('pelanggan@pelanggan.com', 'Ari Susanto', '082280940094', 'Layo', 1, '0ayAUiaG3dqkQsdr0e995kkR48eEg0lkZAvXabTd5A0ivgUXjdosVX2njwJSGetFPkKXutdSjwOIdAJLIKQo9A--'),
 ('risusanto@outlook.com', 'Ari Susanto', NULL, 'palembang', 1, '.VmswKcrWz2y3LcVD7IrxYnmUbIca1KCDqaxwmdDhO17yN~.vnywMKJ6QK3ew.VfYAqs3uY43F.nHVhptq2w2w--');
 
 -- --------------------------------------------------------
@@ -154,16 +158,60 @@ CREATE TABLE `pesanan` (
   `id_keberangkatan` bigint(20) DEFAULT NULL,
   `status` int(1) DEFAULT '3',
   `status_pembayaran` varchar(36) DEFAULT 'belum dibayar',
-  `batas_waktu` varchar(255) DEFAULT NULL
+  `batas_waktu` varchar(255) DEFAULT NULL,
+  `id_rute` int(6) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data untuk tabel `pesanan`
 --
 
-INSERT INTO `pesanan` (`id_pesanan`, `pelanggan`, `id_keberangkatan`, `status`, `status_pembayaran`, `batas_waktu`) VALUES
-(34, 'pelanggan@pelanggan.com', 7, 2, 'LUNAS', '22-07-2017 04:07:17'),
-(37, 'pelanggan@pelanggan.com', 7, 2, 'belum dibayar', '22-07-2017 04:42:55');
+INSERT INTO `pesanan` (`id_pesanan`, `pelanggan`, `id_keberangkatan`, `status`, `status_pembayaran`, `batas_waktu`, `id_rute`) VALUES
+(6, 'pelanggan@pelanggan.com', 9, 1, 'belum dibayar', '25-08-2017 12:45:20', 1),
+(8, 'pelanggan@pelanggan.com', 9, 1, 'LUNAS', '25-08-2017 12:55:55', 1),
+(10, NULL, 9, 3, 'belum dibayar', NULL, 1),
+(12, 'admin', 9, 1, 'LUNAS', '25-08-2017 07:44:20', 1),
+(13, 'admin', 9, 3, 'belum dibayar', NULL, 1),
+(14, 'admin', 9, 3, 'belum dibayar', NULL, 1),
+(15, 'admin', 9, 3, 'belum dibayar', NULL, 1),
+(16, 'admin', 9, 3, 'belum dibayar', NULL, 1),
+(17, 'admin', 9, 3, 'belum dibayar', NULL, 1),
+(18, 'admin', 9, 3, 'belum dibayar', NULL, 1),
+(19, 'admin', 9, 3, 'belum dibayar', NULL, 1),
+(20, 'admin', 9, 3, 'belum dibayar', NULL, 1),
+(21, 'admin', 9, 3, 'belum dibayar', NULL, 1),
+(22, 'admin', 9, 3, 'belum dibayar', NULL, 1),
+(23, 'admin', 9, 3, 'belum dibayar', NULL, 1),
+(24, 'admin', 9, 3, 'belum dibayar', NULL, 1),
+(25, 'admin', 9, 3, 'belum dibayar', NULL, 1),
+(26, 'admin', 9, 3, 'belum dibayar', NULL, 1),
+(27, 'admin', 9, 3, 'belum dibayar', NULL, 1),
+(28, 'admin', 9, 3, 'belum dibayar', NULL, 1),
+(29, 'admin', 9, 3, 'belum dibayar', NULL, 1),
+(30, 'admin', 9, 3, 'belum dibayar', NULL, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `pilihan_rute`
+--
+
+CREATE TABLE `pilihan_rute` (
+  `id` bigint(20) NOT NULL,
+  `id_keberangkatan` bigint(20) DEFAULT NULL,
+  `id_rute` int(6) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data untuk tabel `pilihan_rute`
+--
+
+INSERT INTO `pilihan_rute` (`id`, `id_keberangkatan`, `id_rute`) VALUES
+(3, NULL, 1),
+(4, 9, 3),
+(5, 9, 1),
+(6, 10, 1),
+(7, 10, 3);
 
 -- --------------------------------------------------------
 
@@ -242,6 +290,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`username`, `password`, `id_role`) VALUES
+('082280940094', '5c06181e1485af4fc4051d2c5aa0caba', 3),
 ('admin', '21232f297a57a5a743894a0e4a801fc3', 2),
 ('direktur', '4fbfd324f5ffcdff5dbf6f019b02eca8', 1),
 ('pelanggan@pelanggan.com', '098f6bcd4621d373cade4e832627b4f6', 3),
@@ -305,6 +354,14 @@ ALTER TABLE `pesanan`
   ADD KEY `fk_keberangkatan` (`id_keberangkatan`);
 
 --
+-- Indexes for table `pilihan_rute`
+--
+ALTER TABLE `pilihan_rute`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `keberangkatanrute` (`id_keberangkatan`),
+  ADD KEY `pilihanrute` (`id_rute`);
+
+--
 -- Indexes for table `rekening`
 --
 ALTER TABLE `rekening`
@@ -342,27 +399,32 @@ ALTER TABLE `bus`
 -- AUTO_INCREMENT for table `keberangkatan`
 --
 ALTER TABLE `keberangkatan`
-  MODIFY `id_keberangkatan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_keberangkatan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `konfirmasi`
 --
 ALTER TABLE `konfirmasi`
-  MODIFY `id_konfirmasi` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_konfirmasi` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `log_tiket`
 --
 ALTER TABLE `log_tiket`
-  MODIFY `id_log` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id_log` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `notifikasi`
 --
 ALTER TABLE `notifikasi`
-  MODIFY `id_notifikasi` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id_notifikasi` bigint(20) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `pesanan`
 --
 ALTER TABLE `pesanan`
-  MODIFY `id_pesanan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id_pesanan` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+--
+-- AUTO_INCREMENT for table `pilihan_rute`
+--
+ALTER TABLE `pilihan_rute`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `role`
 --
@@ -418,6 +480,13 @@ ALTER TABLE `pelanggan`
 ALTER TABLE `pesanan`
   ADD CONSTRAINT `fk_keberangkatan` FOREIGN KEY (`id_keberangkatan`) REFERENCES `keberangkatan` (`id_keberangkatan`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_pelangganpesanan` FOREIGN KEY (`pelanggan`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `pilihan_rute`
+--
+ALTER TABLE `pilihan_rute`
+  ADD CONSTRAINT `keberangkatanrute` FOREIGN KEY (`id_keberangkatan`) REFERENCES `keberangkatan` (`id_keberangkatan`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `pilihanrute` FOREIGN KEY (`id_rute`) REFERENCES `rute` (`id_rute`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `user`

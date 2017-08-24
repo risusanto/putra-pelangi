@@ -23,8 +23,8 @@
                 <tr>
                   <th>#</th>
                   <th>Nama</th>
-                  <th>Email</th>
                   <th>Telepon</th>
+                  <th>Email</th>
                   <th>Alamat</th>
                   <th>Opsi</th>
                 </tr>

@@ -31,6 +31,11 @@
           </a>
         </li>
         <li>
+          <a href="<?=base_url('admin/perjalanan')?>">
+            <i class="fa fa-bus"></i> <span>Pesankan Tiket</span>
+          </a>
+        </li>
+        <li>
           <a href="<?=base_url('admin/konfirmasi-pembayaran')?>">
             <i class="fa fa-bus"></i> <span>Konfirmasi Pembayaran</span>
           </a>

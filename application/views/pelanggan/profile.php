@@ -27,8 +27,8 @@
                 <input type="text" name="nama" value="<?=$profile->nama?>" class="form-control" id="exampleInputEmail1" placeholder="Nama Anda">
               </div>
               <div class="form-group">
-                <label for="exampleInputEmail1">Telepon</label>
-                <input type="number" name="telepon" value="<?=$profile->telepon?>" class="form-control" placeholder="Telepon">
+                <label for="exampleInputEmail1">Email</label>
+                <input type="email" name="telepon" value="<?=$profile->telepon?>" class="form-control" placeholder="Email">
               </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Alamat</label>

@@ -70,6 +70,7 @@
           </tr>
           </thead>
           <tbody>
+          <?php $total = 0; ?>
         <?php $i = 1; foreach ($pesanan as $row): ?>
           <?php $rute = $this->rute_m->get_row(['id_rute' => $row->id_rute]) ?>
           <tr>
@@ -78,6 +79,7 @@
             <td><?=$rute->asal?> - <?=$rute->tujuan?></td>
             <td>Rp. <?=number_format($rute->biaya,2,",",".")?></td>
           </tr>
+          <?php $total += $rute->biaya?>
         <?php endforeach; ?>
           </tbody>
         </table>

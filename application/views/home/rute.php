@@ -92,10 +92,15 @@
               </thead>
               <tbody>
               <?php foreach ($keberangkatan as $row):?>
+              <?php $pilihan = $this->pilihan_rute_m->get(['id_keberangkatan' => $row->id_keberangkatan])?>
               <?php if ($row->status != 3):?>
               <tr>
                 <td>KB<?=$row->id_keberangkatan?></td>
-                <td><?=$row->asal?> - <?=$row->tujuan?></td>
+                <td>
+                <?php foreach ($pilihan as $key):?>
+                    <ol><?=$this->rute_m->get_row(['id_rute' => $key->id_rute])->asal?> - <?=$this->rute_m->get_row(['id_rute' => $key->id_rute])->tujuan?></ol>
+                  <?php endforeach;?>
+                </td>
                 <td><?=$row->waktu?></td>
                 <td><?=$row->tanggal?></td>
                 <td><?=$this->log_tiket_m->countTicket(['id_keberangkatan'=>$row->id_keberangkatan])?> / <?=$row->kapasitas?></td>

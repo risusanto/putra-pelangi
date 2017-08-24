@@ -22,6 +22,8 @@ class Web extends MY_Controller
   {
     $this->load->model('keberangkatan_m');
     $this->load->model('log_tiket_m');
+    $this->load->model('pilihan_rute_m');
+    $this->load->model('rute_m');
 
     $tables = ['rute','bus']; $jcond = ['id_rute','id_bus'];
     $this->data['keberangkatan'] = $this->keberangkatan_m->getDataJoin($tables, $jcond,'status != 0');

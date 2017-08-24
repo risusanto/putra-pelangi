@@ -38,7 +38,7 @@ class Daftar extends MY_Controller {
         $cek = $this->user_m->get_row(['username' => $this->POST('email')]);
 
         if (isset($cek)) {
-          $this->flashmsg('Email telah digunakan','warning');
+          $this->flashmsg('Telepon telah digunakan','warning');
           redirect('daftar');
           exit;
         }

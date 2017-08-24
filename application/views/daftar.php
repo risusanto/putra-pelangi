@@ -40,7 +40,7 @@
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="email" class="form-control" name="email" placeholder="Email">
+        <input type="number" class="form-control" name="email" placeholder="No. Telepon">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">

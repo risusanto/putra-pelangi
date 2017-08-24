@@ -21,7 +21,6 @@
           <div class="box">
             <div class="box-header">
               <h3 class="box-title">Pilih Kursi, tersisa <?=$kapasitas - $this->log_tiket_m->countTicket(['id_keberangkatan'=>$this->encrypt->decode($kode)])?></h3>
-              <h3 class="box-title">( <strong style="color:red;">Merah</strong> = Tersedia, <strong>Putih</strong> = Telah dipesan )</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body no-padding">
@@ -89,7 +88,6 @@
           <div class="box">
             <div class="box-header">
               <h3 class="box-title">Pilih Kursi, tersisa <?=$kapasitas - $this->log_tiket_m->countTicket(['id_keberangkatan'=>$this->encrypt->decode($kode)])?></h3>
-              <h3 class="box-title">( <strong style="color:red;">Merah</strong> = Tersedia, <strong>Putih</strong> = Telah dipesan )</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body no-padding">
@@ -223,7 +221,7 @@
           <h4 class="modal-title">Isi Nama</h4>
         </div>
         <div class="modal-body">
-          <?=form_open('dashboard/pesan-tiket/'.$kode.'/'.$this->uri->segment(4))?>
+          <?=form_open('admin/pesan-tiket/'.$kode.'/'.$this->uri->segment(4))?>
               <div class="box-body">
                 <div class="form-group">
                   <label>Atas Nama</label>
@@ -261,7 +259,7 @@
         function(isConfirm){
         if (isConfirm) {
             $.ajax({
-                url: '<?= base_url('dashboard/pesan-tiket/'.$kode.'/'.$this->uri->segment(4)) ?>',
+                url: '<?= base_url('admin/pesan-tiket/'.$kode.'/'.$this->uri->segment(4)) ?>',
                 type: 'POST',
                 data: {
                     pesan: true,
@@ -269,7 +267,7 @@
                     kursi: kursi
                 },
                 success: function() {
-                    window.location = '<?= base_url('dashboard/pesan-tiket/'.$kode.'/'.$this->uri->segment(4)) ?>';
+                    window.location = '<?= base_url('admin/pesan-tiket/'.$kode.'/'.$this->uri->segment(4)) ?>';
                 }
             });
         }
@@ -278,7 +276,7 @@
 
     function get(id) {
         $.ajax({
-            url: '<?= base_url('dashboard/pesan-tiket/'.$kode.'/'.$this->uri->segment(4)) ?>',
+            url: '<?= base_url('admin/pesan-tiket/'.$kode.'/'.$this->uri->segment(4)) ?>',
             type: 'POST',
             data: {
                 id: id,
@@ -307,14 +305,14 @@
         function(isConfirm){
         if (isConfirm) {
             $.ajax({
-                url: '<?= base_url('dashboard/pesan-tiket/'.$kode.'/'.$this->uri->segment(4)) ?>',
+                url: '<?= base_url('admin/pesan-tiket/'.$kode.'/'.$this->uri->segment(4)) ?>',
                 type: 'POST',
                 data: {
                     batal: true,
                     id_pesanan: id_pesanan,
                 },
                 success: function() {
-                    window.location = '<?= base_url('dashboard/perjalanan') ?>';
+                    window.location = '<?= base_url('admin/perjalanan') ?>';
                 }
             });
         }
@@ -335,14 +333,14 @@
         function(isConfirm){
         if (isConfirm) {
             $.ajax({
-                url: '<?= base_url('dashboard/pesan-tiket/'.$kode.'/'.$this->uri->segment(4)) ?>',
+                url: '<?= base_url('admin/pesan-tiket/'.$kode.'/'.$this->uri->segment(4)) ?>',
                 type: 'POST',
                 data: {
                     hapus: true,
                     id: id,
                 },
                 success: function() {
-                    window.location = '<?= base_url('dashboard/pesan-tiket/'.$kode.'/'.$this->uri->segment(4)) ?>';
+                    window.location = '<?= base_url('admin/pesan-tiket/'.$kode.'/'.$this->uri->segment(4)) ?>';
                 }
             });
         }
@@ -365,14 +363,14 @@
         function(isConfirm){
         if (isConfirm) {
             $.ajax({
-                url: '<?= base_url('dashboard/pesan-tiket/'.$kode.'/'.$this->uri->segment(4)) ?>',
+                url: '<?= base_url('admin/pesan-tiket/'.$kode.'/'.$this->uri->segment(4)) ?>',
                 type: 'POST',
                 data: {
                     selesai: true,
                     id_pesanan: id_pesanan,
                 },
                 success: function() {
-                    window.location = '<?= base_url('dashboard/tagihan') ?>';
+                    window.location = '<?= base_url('admin/perjalanan') ?>';
                 }
             });
         }

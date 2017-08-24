@@ -45,7 +45,7 @@
                   <td><?=$row->no_polisi?></td>
                   <td><?=$this->log_tiket_m->countTicket(['id_keberangkatan'=>$row->id_keberangkatan])?> / <?=$row->kapasitas?></td>
                   <td>
-                    <a href="<?=base_url('dashboard/pilih-rute/'.$row->id_keberangkatan)?>" class="btn btn-block btn-success">Pesan</a>
+                    <a href="<?=base_url('admin/pilih-rute/'.$row->id_keberangkatan)?>" class="btn btn-block btn-success">Pesan</a>
                   </td>
                 </tr>
                 <?php endif;?>
